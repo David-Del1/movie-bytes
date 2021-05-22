@@ -1,3 +1,6 @@
-import greeting from './greet';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './style.css';
 
-console.log(greeting);
+ReactDOM.render(<App/>, document.getElementById('app'))
