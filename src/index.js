@@ -1,3 +1,5 @@
-import greeting from './greet.js';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-console.log(`hello, ${greeting}!`);
+ReactDOM.render(<App />, document.getElementById('app'));
