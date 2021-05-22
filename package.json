@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
     "dev": "webpack serve --open --config webpack.config.dev.js",
-    "dev:hot": "npm run dev -- --hot"
+    "dev:hot": "npm run dev -- --hot",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
