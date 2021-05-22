@@ -5,4 +5,8 @@ const baseConfig = require('./webpack.config.base');
 module.exports = merge(baseConfig, {
   mode: 'production',
   plugins: [new BundleAnalyzerPlugin()],
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  },
 });
