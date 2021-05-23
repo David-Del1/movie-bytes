@@ -1,34 +1,23 @@
 import React from 'react';
-import { hot } from 'react-hot-loader'
-
-const Warning = React.lazy(() => import('./Warning'))
-
-
-
+import { hot } from 'react-hot-loader';
+import Row from './Row';
+import requests from './requests';
 
 class App extends React.Component {
-  state = {
-    count: 0
-  }
-
-
 
   render() {
-    const { count } = this.state
+
     return (
-      <div>
-        <h1>Yellow World!! -Zach</h1>
-        <h2 className={count > 10 ? <Warning /> : null}>Count: {count}</h2>
-        <button onClick={() => this.setState(state => ({ count: state.count + 1 }))}>+</button>
-        <button onClick={() => this.setState(state => ({ count: state.count - 1 }))}>-</button>
-        {count > 10 ?
-          <React.Suspense fallback={null}>
-            <Warning />
-          </React.Suspense>
-          : null}
+      <div className="App">
+
+        <Row title="ORIGINALS" fetchURL={requests.fetchNetflixOriginals} />
+        <Row title="Trending Tomorrow" fetchUrl={requests.fetchTrending} />
+
       </div>
+
     )
+
   }
 }
 
-export default hot(module)(App)
+export default hot(module)(App);
