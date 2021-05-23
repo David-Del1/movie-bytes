@@ -1,10 +1,6 @@
 {
   "name": "movie-bytes",
-<<<<<<< HEAD
-  "version": "0.1.0",
-=======
   "version": "1.0.0",
->>>>>>> 540bfa047d29067a4eb399daa00a4f0601fbd1ac
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,10 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/David-Del1/movie-bytes.git"
   },
-<<<<<<< HEAD
-=======
   "keywords": [],
->>>>>>> 540bfa047d29067a4eb399daa00a4f0601fbd1ac
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -31,8 +24,11 @@
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
+    "@babel/runtime": "^7.14.0",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "babel-core": "^7.0.0-bridge.0",
@@ -42,10 +38,7 @@
     "html-webpack-plugin": "^5.3.1",
     "jest": "^26.6.3",
     "style-loader": "^2.0.0",
-<<<<<<< HEAD
-=======
     "superagent": "^6.1.0",
->>>>>>> 540bfa047d29067a4eb399daa00a4f0601fbd1ac
     "webpack": "^5.37.1",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
@@ -53,11 +46,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
-    "@babel/polyfill": "^7.12.1",
     "axios": "^0.21.1",
->>>>>>> 540bfa047d29067a4eb399daa00a4f0601fbd1ac
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

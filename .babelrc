@@ -4,11 +4,8 @@
     "@babel/preset-react"
   ],
   "plugins": [
-<<<<<<< HEAD
-    "react-hot-loader/babel"
-=======
     "react-hot-loader/babel",
-    "@babel/plugin-proposal-class-properties"
->>>>>>> 540bfa047d29067a4eb399daa00a4f0601fbd1ac
+    "@babel/plugin-proposal-class-properties",
+    "@babel/transform-runtime"
   ]
 }
