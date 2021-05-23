@@ -7,7 +7,7 @@ module.exports = merge(baseConfig, {
   plugins: [new BundleAnalyzerPlugin({
     analyzerMode: 'static',
     openAnalyzer: false,
-    reportFileName: 'bundle_sizes.html'
+    reportFilename: 'bundle-sizes.html'
   })],
   externals: {
     react: 'React',
