@@ -2,29 +2,34 @@ import React, { useState, useEffect } from 'react';
 import './Row.css';
 import axios from './axios';
 
-function Row({ title, fetchURL }) {
+const base_url = 'https://image.tmdb.org/t/p/original';
 
+function Row({ title, fetchUrl }) {
   const [movies, setMovies] = useState([]);
 
+  // A snippet of code which runs based on a specific condition
   useEffect(() => {
-
+    // if [], run once when the row loads, and don't run again
     async function fetchData() {
-      const request = await axios.get(fetchURL);
-      console.log(request);
-      return request;
+      const response = await axios.get(fetchUrl);
+      setMovies(response.data.results);
+      return response;
     }
     fetchData();
+  }, [fetchUrl]);
 
-  }, []);
+  console.log(movies);
 
   return (
-    <div>
+    <div className='row'>
       <h2>{title}</h2>
-
-      {/* container -> posters*/}
-
+      <div className='row_posters'>
+        {movies.map((movie) => (
+          <img src={`${base_url}${movie.poster_path}`} alt={movie.name} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default Row
+export default Row;
