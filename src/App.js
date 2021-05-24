@@ -4,19 +4,12 @@ import Row from './Row';
 import requests from './request';
 
 class App extends React.Component {
-
   render() {
-
     return (
-      <div className="App">
-
-        <Row title="ORIGINALS" fetchURL={requests.fetchNetflixOriginals} />
-        <Row title="Trending Tomorrow" fetchUrl={requests.fetchTrending} />
-
+      <div className='App'>
+        <Row title='Trending Tomorrow' fetchUrl={requests.fetchTrending} />
       </div>
-
-    )
-
+    );
   }
 }
 
