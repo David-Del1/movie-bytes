@@ -1,7 +1,7 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import Row from './Row';
-import requests from './requests';
+import requests from './request';
 
 class App extends React.Component {
 
