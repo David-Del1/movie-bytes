@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader';
 import Row from './Row';
 import requests from './request';
 import Banner from './Banner';
+import './App.css';
 
 class App extends React.Component {
   render() {
