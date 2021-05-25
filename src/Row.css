@@ -1,0 +1,43 @@
+* {
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.row_posters {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 20px;
+}
+
+.row_posters::-webkit-scrollbar {
+  display: none;
+}
+
+.row_poster {
+ 
+  height: 100%;
+  object-fit: contain;
+  max-height: 100px;
+  margin-right: 10px;
+  transition: transform 450ms;
+}
+
+.row_poster:hover {
+  transform: scale(1.1);
+}
+
+.row_posterLarger {
+  max-height: 250px;
+}
+
+.row_posterLarge:hover {
+  transform: scale(1.11);
+}
+
+.row {
+  margin-left: 20px;
+  color: white;
+}
