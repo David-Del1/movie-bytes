@@ -11,6 +11,7 @@ import './App.css';
 import AuthPage from './auth/AuthPage';
 import MoviesList from './movies-list/MoviesList';
 import { hot } from 'react-hot-loader';
+import URL from './utils/movies-api.js';
 
 class App extends Component {
   state = {
@@ -45,7 +46,7 @@ class App extends Component {
                 )}
               />
 
-              <Route path="/movies"  //check this route
+              <Route path={`${URL}/movies`}  //check this route. not in backend
                 render={routerProps => (
                   token
                     ? <MoviesList {...routerProps} />
