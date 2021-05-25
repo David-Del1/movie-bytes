@@ -15,12 +15,19 @@ import URL from './utils/movies-api.js';
 
 class App extends Component {
   state = {
-    token: window.localStorage.getItem('TOKEN')
+    token: (window.localStorage.getItem('TOKEN')) ? window.localStorage.getItem('TOKEN') : '',
+    userId: 0
   }
+
+  // handleUser = user => {
+  //   window.localStorage.setItem('TOKEN', user.token);
+  //   this.setState({ token: user.token });
+  // }
 
   handleUser = user => {
     window.localStorage.setItem('TOKEN', user.token);
-    this.setState({ token: user.token });
+    window.localStorage.setItem('USERID', user.id);
+    this.setState({ token: user.token, userId: user.id });
   }
 
   render() {
@@ -33,23 +40,24 @@ class App extends Component {
           <main>
 
             <Switch>
-              <Route path="/" exact={true}
+              {/* <Route path="/" exact={true}
                 render={routerProps => (
                   <AuthPage {...routerProps} />
                 )}
-              />
+              /> */}
 
-              <Route path="/auth" exact={true}
+              <Route path="/" exact={true}
                 render={routerProps => (
                   <AuthPage {...routerProps}
                     onUser={this.handleUser} />
                 )}
               />
 
-              <Route path={`${URL}/movies`}  //check this route. not in backend
+              <Route path={`${URL}/movies`}
+                //check this route. not in backend
                 render={routerProps => (
-                  token
-                    ? <MoviesList {...routerProps} />
+                  (this.state.token)
+                    ? <MoviesList userId={this.state.userId} {...routerProps} />
                     : <Redirect to="/auth" />
                 )}
               />
