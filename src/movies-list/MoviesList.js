@@ -1,6 +1,6 @@
 import React from 'react';
-import Row from './Row';
-import requests from './request';
+import Row from '../Row';
+import requests from '../request';
 
 class MoviesList extends React.Component {
   render() {
@@ -14,7 +14,7 @@ class MoviesList extends React.Component {
         <Row title='Romance' fetchUrl={requests.fetchRomanceMovies} />
         <Row title='Documentaries' fetchUrl={requests.fetchDocumentaries} />
 
-        
+
       </div>
     );
   }

@@ -1,7 +1,6 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Home from '../home/Home';
 import {
   BrowserRouter as Router,
   Route,
@@ -9,8 +8,9 @@ import {
   Redirect
 } from 'react-router-dom';
 import './App.css';
-import AuthPage from '../auth/AuthPage';
+import AuthPage from './auth/AuthPage';
 import MoviesList from './movies-list/MoviesList';
+import { hot } from 'react-hot-loader';
 
 class App extends Component {
   state = {
@@ -28,28 +28,28 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <Header/>
+          <Header />
           <main>
 
             <Switch>
               <Route path="/" exact={true}
                 render={routerProps => (
-                  <Home {...routerProps}/>
+                  <AuthPage {...routerProps} />
                 )}
               />
 
               <Route path="/auth" exact={true}
                 render={routerProps => (
                   <AuthPage {...routerProps}
-                    onUser={this.handleUser}/>
+                    onUser={this.handleUser} />
                 )}
               />
 
-              <Route path="/todopage"
+              <Route path="/movies"  //check this route
                 render={routerProps => (
                   token
-                    ? <ToDoPage {...routerProps}/>
-                    : <Redirect to="/auth"/>
+                    ? <MoviesList {...routerProps} />
+                    : <Redirect to="/auth" />
                 )}
               />
 
@@ -57,7 +57,7 @@ class App extends Component {
 
             </Switch>
           </main>
-          <Footer/>
+          <Footer />
         </Router>
       </div>
     );
