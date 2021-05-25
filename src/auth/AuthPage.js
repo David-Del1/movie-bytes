@@ -24,49 +24,54 @@ export default class AuthPage extends Component {
       console.log(user);
       onUser(user);
 
-      history.push('/moviepage');
+      history.push('/movies'); //wrong route?
     }
     catch (err) {
-      this.setState({ error: err.error})
+      this.setState({ error: err.error })
     }
   }
 
   handleNameChange = ({ target }) => {
-    this.setState({ name: target.value }) 
+    this.setState({ name: target.value })
   }
 
   handleEmailChange = ({ target }) => {
-    this.setState({ email: target.value }) 
+    this.setState({ email: target.value })
   }
 
   handlePasswordChange = ({ target }) => {
-    this.setState({ password: target.value }) 
+    this.setState({ password: target.value })
   }
 
+  handleSwitch = () => {
+    this.setState({ isSignup: !this.state.isSignUp })
+  }
+
+  // handleSwitch = e => { e.preventDefault(); this.setState({ isSignUp: !this.state.isSignUp }); } possibly use if get weird form bahavior
 
   render() {
-    const { isSignUp, name, email, password, error} = this.state;
+    const { isSignUp, name, email, password, error } = this.state;
     return (
       <form className="AuthPage" onSubmit={this.handleSubmit}>
-        {isSignUp && 
-        <div>
-          <label>
-            <span>Name</span>
-            <input name="name" value={name} required={true} onChange={this.handleNameChange}/>
-          </label>
-        </div>}
+        {isSignUp &&
+          <div>
+            <label>
+              <span>Name</span>
+              <input name="name" value={name} required={true} onChange={this.handleNameChange} />
+            </label>
+          </div>}
 
         <div>
           <label>
             <span>Email</span>
-            <input name="email" value={email} required={true} onChange={this.handleEmailChange}/>
+            <input name="email" value={email} required={true} onChange={this.handleEmailChange} />
           </label>
         </div>
 
         <div>
           <label>
             <span>Password</span>
-            <input name="password" type="password" value={password} required={true} onChange={this.handlePasswordChange}/>
+            <input name="password" type="password" value={password} required={true} onChange={this.handlePasswordChange} />
           </label>
         </div>
 

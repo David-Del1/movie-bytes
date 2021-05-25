@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Row.css';
 import axios from './axios';
+import fetchMovieData from './utils/movies-api';
 
 const base_url = 'https://image.tmdb.org/t/p/original';
 
@@ -10,12 +11,12 @@ function Row({ title, fetchUrl, isLargeRow }) {
   // A snippet of code which runs based on a specific condition
   useEffect(() => {
     // if [], run once when the row loads, and don't run again
-    async function fetchData() {
-      const response = await axios.get(fetchUrl);
-      setMovies(response.data.results);
-      return response;
-    }
-    fetchData();
+    // async function fetchData() {
+    //   const response = await axios.get(fetchUrl);
+    //   setMovies(response.data.results);
+    //   return response;
+    // }
+    fetchMovieData();
   }, [fetchUrl]);
 
   console.log(movies);
