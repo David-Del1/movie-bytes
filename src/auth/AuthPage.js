@@ -44,7 +44,7 @@ export default class AuthPage extends Component {
   }
 
   handleSwitch = () => {
-    this.setState({ isSignup: !this.state.isSignUp })
+    this.setState({ isSignUp: !this.state.isSignUp })
   }
 
   // handleSwitch = e => { e.preventDefault(); this.setState({ isSignUp: !this.state.isSignUp }); } possibly use if get weird form bahavior

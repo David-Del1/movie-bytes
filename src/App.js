@@ -53,7 +53,7 @@ class App extends Component {
                 )}
               />
 
-              <Route path={`${URL}/movies`}
+              <Route path='/movies'
                 //check this route. not in backend
                 render={routerProps => (
                   (this.state.token)

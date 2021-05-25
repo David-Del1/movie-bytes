@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from './axios';
-import requests from './request.js';
+import request from 'superagent';
 import './Banner.css'
 
 function Banner() {
@@ -9,13 +8,13 @@ function Banner() {
 
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(requests.fetchTrending);
+      const response = await request.get(requests.fetchTrending);
       setMovie(
-        request.data.results[
-        Math.floor(Math.random() * request.data.results.length - 1)
+        response.data.results[
+        Math.floor(Math.random() * response.data.results.length - 1)
         ]
       );
-      return request;
+      return response;
     }
     fetchData();
   }, []);

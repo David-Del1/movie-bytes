@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import request from 'superagent';
 import './Row.css';
-import axios from './axios';
-import fetchMovieData from './utils/movies-api';
+import { fetchMovieData } from './utils/movies-api';
 
-const base_url = 'https://image.tmdb.org/t/p/original';
+const URL = 'http://localhost:8001';
 
-function Row({ title, fetchUrl, isLargeRow }) {
+function Row({ title, fetchUrl }) {
   const [movies, setMovies] = useState([]);
-
+  // console.log(isLargeRow);
   // A snippet of code which runs based on a specific condition
   useEffect(() => {
     // if [], run once when the row loads, and don't run again
-    // async function fetchData() {
-    //   const response = await axios.get(fetchUrl);
-    //   setMovies(response.data.results);
-    //   return response;
-    // }
+
+  async function fetchMovieData() {
+  const response = await
+    request.get(URL + fetchUrl)
+      .set('Authorization', window.localStorage.getItem('TOKEN'));
+    setMovies(response.body);
+}
+
     fetchMovieData();
   }, [fetchUrl]);
 
@@ -27,9 +30,9 @@ function Row({ title, fetchUrl, isLargeRow }) {
       <div className='row_posters'>
         {movies.map((movie) => (
           <img
-            key={movie.id}
-            className={`row_poster ${isLargeRow && "row_posterLarge"}`}
-            src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
+            key={movie.movieId}
+            className={"row_poster"}
+            src={movie.poster}
             alt={movie.name} />
         ))}
       </div>

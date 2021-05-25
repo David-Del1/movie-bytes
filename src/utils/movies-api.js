@@ -1,5 +1,5 @@
-import request from 'superagent';
-const URL = 'http://localhost:8001';  //maybe move to .env
+import request from 'superagent'; 
+const URL = 'http://localhost:8001';
 
 export async function signUp(credentials) {
 
@@ -27,11 +27,12 @@ export async function signIn(credentials) {
   return response.body;
 }
 
-export async function fetchMovieData() {
+export async function fetchMovieData(fetchUrl) {
   const response = await
-    request.get(fetchUrl);
-  // setMovies(response.data.results);
-  return response;
+    request.get(URL + fetchUrl)
+      .set('Authorization', window.localStorage.getItem('TOKEN'));
+
+  return response.body;
 }
 
 export default URL;
