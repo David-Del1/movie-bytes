@@ -7,6 +7,6 @@ module.exports = merge(baseConfig, {
     port: 9000
   },
   devtool: 'source-map',
-  disableHostCheck: true
+  // disableHostCheck: true
 
 })
