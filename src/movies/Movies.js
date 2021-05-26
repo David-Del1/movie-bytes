@@ -1,12 +1,19 @@
-import React from 'react';
-import Row from '../Row';
-import Banner from '../Banner';
+import React, { Component } from 'react';
+import Header from '../common/header/Header';
+import Banner from '../common/banner/Banner';
+import Row from './row/Row';
+import Footer from '../common/footer/Footer';
 
+export default class Movies extends Component {
+  state = {
+    searchedMovies: [],
+  };
 
-class MoviesList extends React.Component {
   render() {
+    const { history, onUser, onSearch } = this.props;
     return (
-      <div className='MoviesList'>
+      <div className='Movies'>
+        <Header history={history} onUser={onUser} onSearch={onSearch} />
         <Banner fetchUrl='/api/movies/popular' />
         <Row title='Popular' fetchUrl='/api/movies/popular' />
         <Row title='Action' fetchUrl='/api/movies/genre/28' />
@@ -14,11 +21,8 @@ class MoviesList extends React.Component {
         <Row title='Horror' fetchUrl='/api/movies/genre/27' />
         <Row title='Romance' fetchUrl='/api/movies/genre/10749' />
         <Row title='Documentaries' fetchUrl='/api/movies/genre/99' />
-
-
+        <Footer />
       </div>
     );
   }
 }
-
-export default MoviesList;
