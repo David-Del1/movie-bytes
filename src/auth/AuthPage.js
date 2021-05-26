@@ -7,10 +7,10 @@ export default class AuthPage extends Component {
     name: '',
     email: '',
     password: '',
-    error: ''
-  }
+    error: '',
+  };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     const { isSignUp } = this.state;
     const { onUser, history } = this.props;
 
@@ -25,68 +25,83 @@ export default class AuthPage extends Component {
       onUser(user);
 
       history.push('/movies'); //wrong route?
+    } catch (err) {
+      //this.setState({ error: err.error })
+      console.log(err);
     }
-    catch (err) {
-      this.setState({ error: err.error })
-    }
-  }
+  };
 
   handleNameChange = ({ target }) => {
-    this.setState({ name: target.value })
-  }
+    this.setState({ name: target.value });
+  };
 
   handleEmailChange = ({ target }) => {
-    this.setState({ email: target.value })
-  }
+    this.setState({ email: target.value });
+  };
 
   handlePasswordChange = ({ target }) => {
-    this.setState({ password: target.value })
-  }
+    this.setState({ password: target.value });
+  };
 
   handleSwitch = () => {
-    this.setState({ isSignup: !this.state.isSignUp })
-  }
+    this.setState({ isSignUp: !this.state.isSignUp });
+  };
 
   // handleSwitch = e => { e.preventDefault(); this.setState({ isSignUp: !this.state.isSignUp }); } possibly use if get weird form bahavior
 
   render() {
     const { isSignUp, name, email, password, error } = this.state;
     return (
-      <form className="AuthPage" onSubmit={this.handleSubmit}>
-        {isSignUp &&
+      <form className='AuthPage' onSubmit={this.handleSubmit}>
+        {isSignUp && (
           <div>
             <label>
               <span>Name</span>
-              <input name="name" value={name} required={true} onChange={this.handleNameChange} />
+              <input
+                name='name'
+                value={name}
+                required={true}
+                onChange={this.handleNameChange}
+              />
             </label>
-          </div>}
+          </div>
+        )}
 
         <div>
           <label>
             <span>Email</span>
-            <input name="email" value={email} required={true} onChange={this.handleEmailChange} />
+            <input
+              name='email'
+              value={email}
+              required={true}
+              onChange={this.handleEmailChange}
+            />
           </label>
         </div>
 
         <div>
           <label>
             <span>Password</span>
-            <input name="password" type="password" value={password} required={true} onChange={this.handlePasswordChange} />
+            <input
+              name='password'
+              type='password'
+              value={password}
+              required={true}
+              onChange={this.handlePasswordChange}
+            />
           </label>
         </div>
 
         <div>
-          <button type="submit">{isSignUp ? 'Sign Up' : 'Log In'}</button>
+          <button type='submit'>{isSignUp ? 'Sign Up' : 'Log In'}</button>
         </div>
 
         <div>
-          <button type="button" className="switch" onClick={this.handleSwitch}>
-            {isSignUp
-              ? 'Have an account?'
-              : 'Need to create an acount?'}
+          <button type='button' className='switch' onClick={this.handleSwitch}>
+            {isSignUp ? 'Have an account?' : 'Need to create an acount?'}
           </button>
         </div>
       </form>
-    )
+    );
   }
 }

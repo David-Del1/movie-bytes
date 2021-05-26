@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 import './App.css';
 import AuthPage from './auth/AuthPage';
@@ -15,47 +15,51 @@ import URL from './utils/movies-api.js';
 
 class App extends Component {
   state = {
-    token: window.localStorage.getItem('TOKEN')
-  }
+    token: window.localStorage.getItem('TOKEN'),
+  };
 
-  handleUser = user => {
+  handleUser = (user) => {
     window.localStorage.setItem('TOKEN', user.token);
     this.setState({ token: user.token });
-  }
+  };
 
   render() {
     const { token } = this.state;
 
     return (
-      <div className="App">
+      <div className='App'>
         <Router>
           <Header />
           <main>
-
             <Switch>
-              <Route path="/" exact={true}
-                render={routerProps => (
-                  <AuthPage {...routerProps} />
+              <Route
+                path='/'
+                exact={true}
+                render={(routerProps) => (
+                  <AuthPage {...routerProps} onUser={this.handleUser} />
                 )}
               />
 
-              <Route path="/auth" exact={true}
-                render={routerProps => (
-                  <AuthPage {...routerProps}
-                    onUser={this.handleUser} />
+              <Route
+                path='/auth'
+                exact={true}
+                render={(routerProps) => (
+                  <AuthPage {...routerProps} onUser={this.handleUser} />
                 )}
               />
 
-              <Route path={`${URL}/movies`}  //check this route. not in backend
-                render={routerProps => (
-                  token
-                    ? <MoviesList {...routerProps} />
-                    : <Redirect to="/auth" />
-                )}
+              <Route
+                path='/movies' //check this route. not in backend
+                render={(routerProps) =>
+                  token ? (
+                    <MoviesList {...routerProps} />
+                  ) : (
+                    <Redirect to='/auth' />
+                  )
+                }
               />
 
-              <Redirect to="/" />
-
+              <Redirect to='/' />
             </Switch>
           </main>
           <Footer />
@@ -63,7 +67,5 @@ class App extends Component {
       </div>
     );
   }
-
-
 }
 export default hot(module)(App);
