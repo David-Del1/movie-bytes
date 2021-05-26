@@ -12,6 +12,7 @@ import AuthPage from './auth/AuthPage';
 import MoviesList from './movies-list/MoviesList';
 import { hot } from 'react-hot-loader';
 import URL from './utils/movies-api.js';
+import MovieDetail from './movie-detail/MovieDetail';
 
 class App extends Component {
   state = {
@@ -53,7 +54,7 @@ class App extends Component {
                 )}
               />
 
-              <Route path='/movies'
+              <Route path='/movies' exact={true}
                 //check this route. not in backend
                 render={routerProps => (
                   (this.state.token)
@@ -62,7 +63,17 @@ class App extends Component {
                 )}
               />
 
-              <Redirect to="/" />
+              <Route path='/movies/:id'
+
+                render={routerProps => (
+                  (this.state.token) ?
+                    <MovieDetail {...routerProps} />
+                    :
+                    <Redirect to='/auth' />
+
+                )}
+              />
+
 
             </Switch>
           </main>

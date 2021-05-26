@@ -1,4 +1,4 @@
-import request from 'superagent'; 
+import request from 'superagent';
 const URL = 'http://localhost:8001';
 
 export async function signUp(credentials) {
@@ -35,4 +35,10 @@ export async function fetchMovieData(fetchUrl) {
   return response.body;
 }
 
+export async function fetchMovieDetail(movieId) {
+  const response = await
+    request.get(`${URL}/api/movie/${movieId}`)
+      .set('Authorization', window.localStorage.getItem('TOKEN'));
+  return response.body;
+}
 export default URL;
