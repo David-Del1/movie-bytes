@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import request from 'superagent';
 import './Row.css';
 import { fetchMovieData } from './utils/movies-api';
+import { Link } from 'react-router-dom';
 
 const URL = 'http://localhost:8001';
 
@@ -12,28 +13,30 @@ function Row({ title, fetchUrl }) {
   useEffect(() => {
     // if [], run once when the row loads, and don't run again
 
-  async function fetchMovieData() {
-  const response = await
-    request.get(URL + fetchUrl)
-      .set('Authorization', window.localStorage.getItem('TOKEN'));
-    setMovies(response.body);
-}
+    async function fetchMovieData() {
+      const response = await
+        request.get(URL + fetchUrl)
+          .set('Authorization', window.localStorage.getItem('TOKEN'));
+      setMovies(response.body);
+    }
 
     fetchMovieData();
   }, [fetchUrl]);
 
-  console.log(movies);
+
 
   return (
     <div className='row'>
       <h2>{title}</h2>
       <div className='row_posters'>
         {movies.map((movie) => (
-          <img
-            key={movie.movieId}
-            className={"row_poster"}
-            src={movie.poster}
-            alt={movie.name} />
+          <Link to={`/movies/${movie.movieId}`}>
+            <img
+              key={movie.movieId}
+              className="row_poster"
+              src={movie.poster}
+              alt={movie.name} />
+          </Link>
         ))}
       </div>
     </div>
