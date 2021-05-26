@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const URL = 'http://localhost:8001';
 
 function Row({ title, fetchUrl }) {
-  const [movies, setMovies] = useState([]);
+  const [{ movies: [], favorites: [] }, setMovies] = useState({});
   // console.log(isLargeRow);
   // A snippet of code which runs based on a specific condition
   useEffect(() => {
@@ -17,7 +17,16 @@ function Row({ title, fetchUrl }) {
       const response = await
         request.get(URL + fetchUrl)
           .set('Authorization', window.localStorage.getItem('TOKEN'));
-      setMovies(response.body);
+      const data = await Promise.all(
+        response.body.map(async (movie) => {
+          const response2 = await request.get(
+            `${URL}/api/me/favorites/${movie.movieId}`
+          ).set('Authorization', window.localStorage.getItem('TOKEN'));
+          return response2.body.length > 0;
+        })
+
+
+      setMovies({ movies: response.body, favorites: data });
     }
 
     fetchMovieData();
@@ -29,13 +38,16 @@ function Row({ title, fetchUrl }) {
     <div className='row'>
       <h2>{title}</h2>
       <div className='row_posters'>
-        {movies.map((movie) => (
+        {movies.map((movie, index) => (
+
           <Link to={`/movies/${movie.movieId}`}>
             <img
               key={movie.movieId}
               className="row_poster"
               src={movie.poster}
               alt={movie.name} />
+            <button onClick={this.handleClick}> {favorites[index] ? '♥️' : '♡'}
+            </button>
           </Link>
         ))}
       </div>

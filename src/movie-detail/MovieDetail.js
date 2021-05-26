@@ -8,7 +8,6 @@ export default class MovieDetail extends Component {
   }
 
   async componentDidMount() {
-    debugger;
     const { match } = this.props;
     try {
       const movie = await fetchMovieDetail(match.params.id);
