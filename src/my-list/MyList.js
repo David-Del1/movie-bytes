@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import './Favorites.css';
+import './MyList.css';
 
-export default class Favorites extends Component {
+export default class MyList extends Component {
   render() {
     return (
-      <div className='Favorites'>
-        <Header onUser={onUser} onSearch={onSearch} />
+      <div className='MyList'>
+        <Header />
         <Banner fetchUrl='/api/movies/popular' />
         <MovieList fetchUrl='/api/movies/popular' />
         <Footer />
