@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import request from 'superagent';
 import './Banner.css'
+const URL = 'http://localhost:8001';
 
-function Banner() {
+function Banner({ fetchUrl }) {
 
   const [movie, setMovie] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await request.get(requests.fetchTrending);
+      const response = await request.get(URL + fetchUrl)
+        .set('Authorization', window.localStorage.getItem('TOKEN'));
       setMovie(
-        response.data.results[
-        Math.floor(Math.random() * response.data.results.length - 1)
+        response.body[
+        Math.floor(Math.random() * response.body.length - 1)
         ]
       );
-      return response;
+      // return response;
     }
     fetchData();
   }, []);
@@ -27,7 +29,7 @@ function Banner() {
     <header className="banner"
       style={{
         backgroundSize: "cover",
-        backgroundImage: `url("https://image.tmdb.org/t/p/original${movie?.backdrop_path}"
+        backgroundImage: `url("https://image.tmdb.org/t/p/original${movie?.backdrop}"
       )`,
         backdropPosition: "center center"
       }}
