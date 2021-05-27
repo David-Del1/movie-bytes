@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom';
 import request from 'superagent';
+import MovieDetail from '../../movie-detail/MovieDetail';
 import './Banner.css';
-//const URL = 'http://localhost:8001';
 const URL = '';
 
 function Banner({ fetchUrl }) {
@@ -39,7 +40,9 @@ function Banner({ fetchUrl }) {
         </h1>
 
         <div className='banner_buttons'>
-          <button className='banner_button'>Favorite</button>
+          <Link to={`/movies/${movie.movieId}`}>
+            <button className='banner_button'>Watch Trailer</button>
+          </Link>
           <button className='banner_button'>Add to My List</button>
         </div>
         <h1 className='banner_description'>{truncate(movie?.overview, 180)}</h1>
