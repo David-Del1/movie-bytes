@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
 
 .Header {
   position: fixed;
@@ -9,30 +10,36 @@
   align-items: center;
   background: #111;
   font-family: 'Lato', sans-serif;
+  z-index: 1000;
 }
 
-.Header a {
+/* .Header a {
   transition: color ease-in-out 0.2s;
 }
 
 .Header a:hover {
   color: rgb(45, 194, 194);
   
-}
+} */
 
 .Header .logo {
-  left: 0;
-  height: 80px;
-  object-fit: contain;
+  font-family: 'Limelight', cursive;
+
+  color: rgb(233, 35, 8);
+  font-size: 2.4rem;
+  padding: 1.6rem;
+  text-shadow: 1px 2px 0px rgb(255, 137, 2);
 }
 
 .Header input {
   font-size: 16px;
+  outline: none;
+  padding: 2px;
 }
 
 .nav_avatar {
   
   margin-right: 0.8rem;
-  width: 30px;
+  width: 50px;
   object-fit: contain;
 }

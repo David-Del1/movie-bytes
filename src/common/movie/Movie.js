@@ -55,11 +55,12 @@ export default class Movie extends Component {
             alt={movie.name}
           />
         </Link>
-          {/* <button 
+        
+          <button 
             onClick={this.handleClick}
             className="fave-button">
               {isFavorite ? '♥️' : '♡'}
-          </button> */}
+          </button>
         
       </li>
     );

@@ -31,7 +31,8 @@ export default class Header extends Component {
     return (
       <div className="Header">
         <Link to="/">
-          <img src="src/assets/Movi-Bytes-logo.PNG" alt="logo" className="logo"/>
+          {/* <img src="assets/images/Movi-Bytes-logo.PNG" alt="logo" className="logo"/> */}
+          <h1 className="logo">Movi-Bytes</h1>
         </Link>
 
         

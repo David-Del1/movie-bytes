@@ -13,12 +13,12 @@ export default class Movies extends Component {
       <div className='Movies'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
         <Banner fetchUrl='/api/movies/popular' />
-        <Row title='Popular' fetchUrl='/api/movies/popular' />
-        <Row title='Action' fetchUrl='/api/movies/genre/28' />
-        <Row title='Comedy' fetchUrl='/api/movies/genre/35' />
-        <Row title='Horror' fetchUrl='/api/movies/genre/27' />
-        <Row title='Romance' fetchUrl='/api/movies/genre/10749' />
-        <Row title='Documentaries' fetchUrl='/api/movies/genre/99' />
+        <Row className="category-row" title='Popular' fetchUrl='/api/movies/popular' />
+        <Row className="category-row" title='Action' fetchUrl='/api/movies/genre/28' />
+        <Row className="category-row" title='Comedy' fetchUrl='/api/movies/genre/35' />
+        <Row className="category-row" title='Horror' fetchUrl='/api/movies/genre/27' />
+        <Row className="category-row" title='Romance' fetchUrl='/api/movies/genre/10749' />
+        <Row className="category-row" title='Documentaries' fetchUrl='/api/movies/genre/99' />
         <Footer />
       </div>
     );

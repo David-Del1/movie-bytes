@@ -2,8 +2,13 @@
   position: relative;
 }
 
-.Movie .fave-button {
-  padding: 100px;
+.fave-button {
   position: absolute;
-  top: 50px;
+  z-index: 0;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: red;
+  left: 0;
+  
 }

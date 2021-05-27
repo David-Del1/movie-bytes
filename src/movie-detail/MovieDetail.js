@@ -23,13 +23,23 @@ export default class MovieDetail extends Component {
     const { movie } = this.state;
     const { onUser, onSearch } = this.props;
     return (
-      <div className='MovieDetail'>
-        <Header onUser={onUser} onSearch={onSearch} />
+      <>
+      <Header onUser={onUser} onSearch={onSearch} />
+      <div 
+        className='MovieDetail'
+        style={{backgroundImage: `url(${movie.backdrop})`}}>
+        
         <h1>{movie.title}</h1>
-        <img src={movie.backdrop} alt={movie.title} />
-        <p>{movie.overview}</p>
-        <Footer />
+        <p className="movie-overview">{movie.overview}</p>
+
+        {/* <button 
+            onClick={this.handleClick}
+            className="fave-button">
+              {isFavorite ? '♥️' : '♡'}
+          </button> */}
+        
       </div>
+      </>
     );
   }
 }
