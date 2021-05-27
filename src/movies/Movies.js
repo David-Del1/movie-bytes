@@ -3,11 +3,9 @@ import Header from '../common/header/Header';
 import Banner from '../common/banner/Banner';
 import Row from './row/Row';
 import Footer from '../common/footer/Footer';
+import './Movies.css';
 
 export default class Movies extends Component {
-  state = {
-    searchedMovies: [],
-  };
 
   render() {
     const { history, onUser, onSearch } = this.props;
