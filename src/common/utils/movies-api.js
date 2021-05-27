@@ -30,7 +30,6 @@ export async function discoverMovies(fetchUrl) {
   const response = await request
     .get(fetchUrl)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-
   return response.body;
 }
 
@@ -39,79 +38,78 @@ export async function searchMovies(search) {
     .get('/api/movies')
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .query({ search: search });
-
-  return response.body;
-}
-
-export async function getMyFavorites() {
-  const response = await request
-    .get('/api/me/favorites')
-    .set('Authorization', window.localStorage.getItem('TOKEN'));
-
   return response.body;
 }
 
 export async function fetchMovieDetail(movieId) {
   const response = await request
-    .get(`/api/movie/${movieId}`)
+    .get(`/api/movies/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
+  return response.body;
+}
+
+export async function getMyFavorites() {
+  const response = await request
+    .get('/api/me/movies/favorites')
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  return response.body;
+}
+
+export async function getMyList() {
+  const response = await request
+    .get('/api/me/movies/list')
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  console.log(`got your list: ${response.body}`);
   return response.body;
 }
 
 export async function isMyFavorite(movieId) {
   const response = await request
-    .get(`/api/me/favorites/${movieId}`)
+    .get(`/api/me/movies/${movieId}/favorite`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-
-  return response.body.length > 0;
+  return response.body;
 }
 
-export async function addFavorite(favorite) {
+export async function isInMyList(movieId) {
   const response = await request
-    .post('/api/me/favorites')
-    .set('Authorization', window.localStorage.getItem('TOKEN'))
-    .send(favorite);
-
-  return response;
-}
-
-export async function deleteFavorite(id) {
-  const response = await request
-    .delete(`/api/me/favorites/${id}`)
+    .get(`/api/me/movies/${movieId}/list`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-
-  return response;
-}
-
-export async function favoritesHandler(movie, isFavorite, favorites) {
-  try {
-    if (isFavorite) {
-      const response = await addFavorite(movie);
-      if (response.status !== 200) {
-        throw new Error(response.body);
-      }
-      const favorite = response.body;
-      // add artwork to favorites array
-      favorites.splice(1, 0, favorite);
-    } else {
-      // find the artwork id to delete
-      let index = 0;
-      for (let i = 0; i < favorites.length; i++) {
-        if (favorites[i].movieId === movie.movieId) {
-          index = i;
-          break;
-        }
-      }
-      const favoriteId = favorites[index].id;
-      const response = await deleteFavorite(favoriteId);
-      if (response.status !== 200) {
-        throw new Error(response.body);
-      }
-      // delete the artwork from favorites array
-      favorites.splice(index, 1);
-    }
-  } catch (err) {
-    console.log(err.message);
+  if (response.body === null) {
+    console.log(`you need to add ${movieId} to your movies`);
+    return false;
+  } else {
+    const { myList } = response.body;
+    console.log(`${movieId} ${myList ? 'is' : 'is not'} in your list`);
+    return myList;
   }
-  return favorites;
+}
+
+export async function addMovie(movie) {
+  const response = await request
+    .post('/api/me/movies')
+    .set('Authorization', window.localStorage.getItem('TOKEN'))
+    .send(movie);
+  return response;
+}
+
+export async function changeFavorite(movie) {
+  const response = await request
+    .put(`/api/me/movies/${movie.movieId}/favorite`)
+    .set('Authorization', window.localStorage.getItem('TOKEN'))
+    .send({ favorite: movie.favorite });
+  return response;
+}
+
+export async function changeMyList(movie) {
+  if (await isInMyList(movie.movieId)) {
+    console.log(`changing ${movie.movieId}'s myList to ${!movie.myList}`);
+    return await request
+      .put(`/api/me/movies/${movie.movieId}/list`)
+      .set('Authorization', window.localStorage.getItem('TOKEN'))
+      .send({ myList: !movie.myList });
+  } else {
+    movie.myList = true;
+    console.log(`adding ${movie.movieId} to your movies`);
+    return await addMovie(movie);
+  }
 }

@@ -1,51 +1,57 @@
 import React, { Component } from 'react';
-import { isMyFavorite } from '../utils/movies-api.js';
+import { isInMyList, changeMyList } from '../utils/movies-api.js';
 import { Link } from 'react-router-dom';
 import './Movie.css';
 
 export default class Movie extends Component {
   state = {
-    isFavorite: false,
+    isInMyList: !!this.props.updateMyList,
   };
 
   async componentDidMount() {
-    const { movie } = this.props;
-    const token = window.localStorage.getItem('TOKEN');
-    this.setState({
-      isFavorite: token ? await isMyFavorite(movie.movieId) : false,
-    });
+    if (!this.state.isInMyList) {
+      const { movie } = this.props;
+      const token = window.localStorage.getItem('TOKEN');
+      this.setState({
+        isInMyList: token ? await isInMyList(movie.movieId) : false,
+      });
+    }
   }
 
-  handleClick = (e) => {
+  handleClick = async (e) => {
     e.preventDefault();
-    const token = window.localStorage.getItem('TOKEN');
-    if (token === null) {
-      window.alert('You Must Be Logged In To Add Movies To Favorites');
+    const { isInMyList } = this.state;
+    if (
+      isInMyList &&
+      !window.confirm(
+        'Are you sure you wish to remove this movie from your list?'
+      )
+    )
       return;
-    } else {
-      debugger;
-      if (
-        this.state.isFavorite &&
-        !window.confirm(
-          'Are you sure you wish to remove this movie from your favorites?'
-        )
-      ) {
-        return;
+    if (!window.localStorage.getItem('TOKEN')) {
+      window.alert('You must be logged in to add this movie to your list');
+      return;
+    }
+    try {
+      const { movie, updateMyList } = this.props;
+      movie.myList = isInMyList;
+      const response = await changeMyList(movie);
+      if (response.status !== 200) {
+        throw new Error(response.body);
       }
-      try {
-        const { movie, onFavorited } = this.props;
-        const isFavorite = !this.state.isFavorite;
-        onFavorited(movie, isFavorite);
-        this.setState({ isFavorite });
-      } catch (err) {
-        console.log(err.message);
+      if (updateMyList) {
+        updateMyList(response.body);
+      } else {
+        this.setState({ isInMyList: !isInMyList });
       }
+    } catch (err) {
+      console.log(err.message);
     }
   };
 
   render() {
     const { movie } = this.props;
-    const { isFavorite } = this.state;
+    const { isInMyList } = this.state;
     return (
       <li className='Movie'>
         <Link to={`/movies/${movie.movieId}`}>
@@ -55,6 +61,9 @@ export default class Movie extends Component {
             src={movie.poster}
             alt={movie.name}
           />
+          <button onClick={this.handleClick}>
+            {isInMyList ? '- My-List' : '+ My-List'}
+          </button>
         </Link>
         
           <button 

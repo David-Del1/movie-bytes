@@ -22,7 +22,6 @@ export default class Auth extends Component {
     try {
       const action = isSignUp ? signUp : signIn;
       const user = await action(this.state);
-      console.log(user);
       onUser(user);
 
       history.push('/movies'); //wrong route?

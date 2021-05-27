@@ -29,22 +29,22 @@ export default class Home extends Component {
   }
 
   render() {
-    const { history, onUser, onSearch, onFavorited } = this.props;
+    const { history, onUser, onSearch } = this.props;
     const { popular, action, comedy, horror, romance, documentaries } =
       this.state;
     return (
       <div className='Movies'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
         <Banner fetchUrl='/api/movies/popular' />
-        <MovieList title='Popular' movies={popular} onFavorited={onFavorited} />
-        <MovieList title='Action' movies={action} onFavorited={onFavorited} />
-        <MovieList title='Comedy' movies={comedy} onFavorited={onFavorited} />
-        <MovieList title='Horror' movies={horror} onFavorited={onFavorited} />
-        <MovieList title='Romance' movies={romance} onFavorited={onFavorited} />
+        <MovieList title='Popular' movies={popular} updateMyList={null} />
+        <MovieList title='Action' movies={action} updateMyList={null} />
+        <MovieList title='Comedy' movies={comedy} updateMyList={null} />
+        <MovieList title='Horror' movies={horror} updateMyList={null} />
+        <MovieList title='Romance' movies={romance} updateMyList={null} />
         <MovieList
           title='Documentaries'
           movies={documentaries}
-          onFavorited={onFavorited}
+          updateMyList={null}
         />
         <Footer />
       </div>
