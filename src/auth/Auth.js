@@ -106,8 +106,12 @@ export default class Auth extends Component {
             {isSignUp ? 'Have an account?' : 'Need to create an account?'}
           </button>
         </div>
+        
       </form>
+      {/* {error && window.alert('Oh no! Wrong Username or Password.')} */}
       </div>
+
+      
     );
   }
 }

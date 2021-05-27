@@ -35,8 +35,15 @@ export default class MovieDetail extends Component {
           style={{ backgroundImage: `url(${movie.backdrop})` }}>
 
           <h1>{movie.title}</h1>
+          <iframe 
+            width="800" 
+            height="444" 
+            src={`https://www.youtube.com/embed/${movieTrailer}`} 
+            title="YouTube video player" 
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+            className="trailer"></iframe>
           <p className="movie-overview">{movie.overview}</p>
-          <iframe width="560" height="315" src={`https://www.youtube.com/embed/${movieTrailer}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          
 
         </div>
       </>
