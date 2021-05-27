@@ -33,18 +33,14 @@ module.exports = {
           to: 'https://still-brushlands-56791.herokuapp.com/api/:splat',
           status: 200,
           force: true,
-          conditions: {
-            role: ['admin', 'cms'],
-          },
+          
         },
         {
           from: '/*',
           to: '/index.html',
           status: 200,
-          force: true,
-          conditions: {
-            role: ['admin', 'cms'],
-          },
+          force: false,
+          
         },
       ],
     }),
