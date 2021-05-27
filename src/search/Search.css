@@ -1,5 +1,8 @@
-/* .Search {
+.Search {
   height: 100vh;
-  display: flex;
-} */
+}
+
+.SearchMovies-container {
+  padding-top: 120px;
+}
 

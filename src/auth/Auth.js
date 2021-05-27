@@ -49,7 +49,10 @@ export default class Auth extends Component {
   render() {
     const { isSignUp, name, email, password, error } = this.state;
     return (
-      <div className="AuthContainer">
+      <div 
+        className="AuthContainer"
+        style={{backgroundImage: "url(src/assets/auth-bg.jpeg)"}}
+      >
       <h1 className="auth-logo">Movi-Bytes</h1>
       <form className='Auth' onSubmit={this.handleSubmit}>
         {isSignUp && (

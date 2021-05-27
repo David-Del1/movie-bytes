@@ -10,7 +10,11 @@ export default class Search extends Component {
     return (
       <div className='Search'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
-        <MovieList movies={movies} updateMyList={null} />
+
+        <div className="SearchMovies-container">
+          <MovieList movies={movies} updateMyList={null} />
+        </div>
+        
         <Footer />
       </div>
     );
