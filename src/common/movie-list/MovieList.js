@@ -4,7 +4,7 @@ import './MovieList.css';
 
 export default class MovieList extends Component {
   render() {
-    const { title, movies, isFavorite, updateFavorites } = this.props;
+    const { title, movies, updateMyList } = this.props;
     return movies.length > 0 ? (
       <div className='MovieList'>
         <h1 className='Title'>{title}</h1>
@@ -13,8 +13,7 @@ export default class MovieList extends Component {
             <Movie
               key={movie.movieId}
               movie={movie}
-              isFavorite={isFavorite}
-              updateFavorites={updateFavorites}
+              updateMyList={updateMyList}
             />
           ))}
         </ul>

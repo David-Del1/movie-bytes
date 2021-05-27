@@ -10,7 +10,7 @@ export default class Movies extends Component {
     return (
       <div className='Search'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
-        <MovieList movies={movies} updateFavorites={null} />
+        <MovieList movies={movies} updateMyList={null} />
         <Footer />
       </div>
     );

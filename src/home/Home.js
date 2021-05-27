@@ -36,15 +36,15 @@ export default class Home extends Component {
       <div className='Movies'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
         <Banner fetchUrl='/api/movies/popular' />
-        <MovieList title='Popular' movies={popular} updateFavorites={null} />
-        <MovieList title='Action' movies={action} updateFavorites={null} />
-        <MovieList title='Comedy' movies={comedy} updateFavorites={null} />
-        <MovieList title='Horror' movies={horror} updateFavorites={null} />
-        <MovieList title='Romance' movies={romance} updateFavorites={null} />
+        <MovieList title='Popular' movies={popular} updateMyList={null} />
+        <MovieList title='Action' movies={action} updateMyList={null} />
+        <MovieList title='Comedy' movies={comedy} updateMyList={null} />
+        <MovieList title='Horror' movies={horror} updateMyList={null} />
+        <MovieList title='Romance' movies={romance} updateMyList={null} />
         <MovieList
           title='Documentaries'
           movies={documentaries}
-          updateFavorites={null}
+          updateMyList={null}
         />
         <Footer />
       </div>

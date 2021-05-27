@@ -39,7 +39,6 @@ export default class Header extends Component {
         <form onSubmit={this.handleSubmit}>
           <input onChange={this.handleChange} value={search} />
         </form>
-        <Link to='/favorites'>Favorites</Link>
         <Link to='/my-list'>My List</Link>
         <button onClick={this.handleClick}>
           {token ? 'Sign Out' : 'Log In'}

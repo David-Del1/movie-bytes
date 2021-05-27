@@ -8,7 +8,6 @@ import {
 import Home from '../home/Home';
 import Auth from '../auth/Auth';
 import Search from '../search/Search';
-import Favorites from '../favorites/Favorites';
 import MyList from '../my-list/MyList';
 import MovieDetail from '../movie-detail/MovieDetail';
 import { searchMovies } from '../common/utils/movies-api.js';
@@ -68,22 +67,6 @@ export default class App extends Component {
                   onSearch={this.handleSearch}
                 />
               )}
-            />
-
-            <Route
-              path='/favorites'
-              exact={true}
-              render={(routerProps) =>
-                token ? (
-                  <Favorites
-                    {...routerProps}
-                    onUser={this.handleUser}
-                    onSearch={this.handleSearch}
-                  />
-                ) : (
-                  <Redirect to='/' />
-                )
-              }
             />
 
             <Route
