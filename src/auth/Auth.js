@@ -46,12 +46,10 @@ export default class Auth extends Component {
     this.setState({ isSignUp: !this.state.isSignUp });
   };
 
-  // handleSwitch = e => { e.preventDefault(); this.setState({ isSignUp: !this.state.isSignUp }); } possibly use if get weird form bahavior
-
   render() {
     const { isSignUp, name, email, password, error } = this.state;
     return (
-      <form className='AuthPage' onSubmit={this.handleSubmit}>
+      <form className='Auth' onSubmit={this.handleSubmit}>
         {isSignUp && (
           <div>
             <label>

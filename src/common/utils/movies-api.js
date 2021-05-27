@@ -1,10 +1,8 @@
 import request from 'superagent';
-//const URL = 'http://localhost:8001';
-const URL = '';
 
 export async function signUp(credentials) {
   const response = await request
-    .post(`${URL}/api/auth/signup`)
+    .post('/api/auth/signup')
     .ok((res) => res.status < 500)
     .send(credentials);
 
@@ -17,7 +15,7 @@ export async function signUp(credentials) {
 
 export async function signIn(credentials) {
   const response = await request
-    .post(`${URL}/api/auth/signin`)
+    .post('/api/auth/signin')
     .ok((res) => res.status < 500)
     .send(credentials);
 
@@ -30,7 +28,7 @@ export async function signIn(credentials) {
 
 export async function discoverMovies(fetchUrl) {
   const response = await request
-    .get(URL + fetchUrl)
+    .get(fetchUrl)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
 
   return response.body;
@@ -55,7 +53,7 @@ export async function getMyFavorites() {
 
 export async function fetchMovieDetail(movieId) {
   const response = await request
-    .get(`${URL}/api/movie/${movieId}`)
+    .get(`/api/movie/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
   return response.body;
 }
@@ -70,7 +68,7 @@ export async function isMyFavorite(movieId) {
 
 export async function addFavorite(favorite) {
   const response = await request
-    .post('/api/favorites')
+    .post('/api/me/favorites')
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send(favorite);
 
@@ -79,7 +77,7 @@ export async function addFavorite(favorite) {
 
 export async function deleteFavorite(id) {
   const response = await request
-    .delete(`/api/favorites/${id}`)
+    .delete(`/api/me/favorites/${id}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
 
   return response;
