@@ -7,39 +7,50 @@ import {
 } from 'react-router-dom';
 import './App.css';
 
-import Movies from '../movies/Movies';
+import Home from '../home/Home';
 import Auth from '../auth/Auth';
-import Search from '../search/Search';
-import Favorites from '../favorites/Favorites';
+import Movies from '../movies/Movies';
 import MyList from '../my-list/MyList';
 import MovieDetail from '../movie-detail/MovieDetail';
-import { searchMovies } from '../common/utils/movies-api.js';
+import {
+  searchMovies,
+  getMyFavorites,
+  favoritesHandler,
+} from '../common/utils/movies-api.js';
 
 export default class App extends Component {
   state = {
-    token: window.localStorage.getItem('TOKEN')
-      ? window.localStorage.getItem('TOKEN')
-      : '',
-    userId: 0,
-    movies: [],
+    searchedMovies: [],
+    favorites: [],
   };
 
   handleUser = (user) => {
     window.localStorage.setItem('TOKEN', user.token);
-    window.localStorage.setItem('USERID', user.id);
-    this.setState({ token: user.token, userId: user.id });
   };
 
   handleSearch = async (search) => {
     try {
-      this.setState({ movies: await searchMovies(search) });
+      this.setState({ searchedMovies: await searchMovies(search) });
     } catch (err) {
       console.log(err.message);
     }
   };
 
+  handleFavorite = async (movie, isFavorite) => {
+    const { favorites } = this.state;
+    this.setState({
+      favorites: await favoritesHandler(movie, isFavorite, favorites),
+    });
+  };
+
+  async componentDidMount() {
+    const token = window.localStorage.getItem('TOKEN');
+    this.setState({ favorites: token ? await getMyFavorites() : [] });
+  }
+
   render() {
-    const { movies, token } = this.state;
+    const { searchedMovies, favorites } = this.state;
+    const token = window.localStorage.getItem('TOKEN');
     return (
       <div className='App'>
         <Router>
@@ -48,10 +59,11 @@ export default class App extends Component {
               path='/'
               exact={true}
               render={(routerProps) => (
-                <Movies
+                <Home
                   {...routerProps}
                   onUser={this.handleUser}
                   onSearch={this.handleSearch}
+                  onFavorited={this.handleFavorite}
                 />
               )}
             />
@@ -68,10 +80,12 @@ export default class App extends Component {
               path='/search'
               exact={true}
               render={(routerProps) => (
-                <Search
+                <Movies
                   {...routerProps}
-                  movies={movies}
+                  movies={searchedMovies}
+                  onUser={this.handleUser}
                   onSearch={this.handleSearch}
+                  onFavorited={this.handleFavorite}
                 />
               )}
             />
@@ -80,11 +94,13 @@ export default class App extends Component {
               path='/favorites'
               exact={true}
               render={(routerProps) =>
-                this.state.token ? (
-                  <Favorites
+                token ? (
+                  <Movies
                     {...routerProps}
-                    movies={movies}
+                    movies={favorites}
+                    onUser={this.handleUser}
                     onSearch={this.handleSearch}
+                    onFavorited={this.handleFavorite}
                   />
                 ) : (
                   <Redirect to='/' />
@@ -96,10 +112,11 @@ export default class App extends Component {
               path='/my-list'
               exact={true}
               render={(routerProps) =>
-                this.state.token ? (
+                token ? (
                   <MyList
                     {...routerProps}
                     movies={movies}
+                    onUser={this.handleUser}
                     onSearch={this.handleSearch}
                   />
                 ) : (
