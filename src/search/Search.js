@@ -4,7 +4,7 @@ import MovieList from '../common/movie-list/MovieList';
 import Footer from '../common/footer/Footer';
 import './Search.css';
 
-export default class Movies extends Component {
+export default class Search extends Component {
   render() {
     const { history, onUser, onSearch, movies } = this.props;
     return (

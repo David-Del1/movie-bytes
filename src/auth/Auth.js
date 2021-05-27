@@ -100,7 +100,7 @@ export default class Auth extends Component {
 
         <div>
           <button type='button' className='switch' onClick={this.handleSwitch}>
-            {isSignUp ? 'Have an account?' : 'Need to create an acount?'}
+            {isSignUp ? 'Have an account?' : 'Need to create an account?'}
           </button>
         </div>
       </form>

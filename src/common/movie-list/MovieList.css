@@ -1,4 +1,4 @@
-.MovieList {
+.MovieList ul{
   display: flex;
   list-style: none;
   overflow-x: scroll;
@@ -7,4 +7,8 @@
 
 .MovieList::-webkit-scrollbar {
   display: none;
+}
+
+.MovieList .Title {
+  padding-left: 16px;
 }

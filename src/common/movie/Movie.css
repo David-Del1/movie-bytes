@@ -14,13 +14,29 @@
   box-shadow: 0px 0px 10px 2px black;
 }
 
-.fave-button {
+.my-list-btn {
   position: absolute;
-  z-index: 0;
   background: transparent;
-  border: none;
-  font-size: 2rem;
+  border: 1px solid white;
+  color: white;
+  right: 0;
+  top: 10;
+  z-index: 100;
+  font-size: 20px;
+  margin: 10px 10px 0 0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.remove-btn {
+  position: absolute;
+  background: white;
+  border: 1px solid white;
   color: red;
-  left: 0;
-  
+  right: 0;
+  top: 10;
+  z-index: 100;
+  font-size: 20px;
+  margin: 10px 10px 0 0;
+  cursor: pointer;
 }
