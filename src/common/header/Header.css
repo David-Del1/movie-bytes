@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+
+.Header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  font-family: 'Lato', sans-serif;
+  z-index: 1000;
+  box-shadow: 0px 5px 10px 2px black;
+}
+
+/* .Header a {
+  transition: color ease-in-out 0.2s;
+}
+
+.Header a:hover {
+  color: rgb(45, 194, 194);
+  
+} */
+
+.Header .logo {
+  font-family: 'Limelight', cursive;
+  color: rgb(233, 35, 8);
+  font-size: 2.4rem;
+  padding: 1.6rem;
+  text-shadow: 1px 2px 0px rgb(255, 137, 2);
+}
+
+.Header a {
+  transition: color ease-in-out 0.1s;
+  font-size: 1.2rem;
+}
+
+.Header a:hover {
+  color: rgb(255, 137, 2);
+}
+
+.Header input {
+  font-size: 18px;
+  outline: none;
+  padding: 2px;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+.nav_avatar {
+  
+  margin-right: 0.8rem;
+  width: 50px;
+  object-fit: contain;
+}
+
+.nav_avatar:hover {
+  cursor: pointer;
+}

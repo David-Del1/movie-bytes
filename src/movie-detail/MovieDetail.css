@@ -1,0 +1,29 @@
+.MovieDetail {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.MovieDetail img{
+  height: 200px;
+  object-fit: contain;
+}
+
+.MovieDetail h1 {
+  background: rgba(51, 51, 51, 0.7);
+  font-size: 3rem;
+  padding: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.MovieDetail .movie-overview {
+  background: rgba(51, 51, 51, 0.7);
+  width: 50%;
+  font-size: 2rem;
+  padding: 0.6rem;
+}

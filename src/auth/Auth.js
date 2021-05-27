@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { signUp, signIn } from '../common/utils/movies-api';
+import './Auth.css';
 
 export default class Auth extends Component {
   state = {
@@ -48,16 +49,19 @@ export default class Auth extends Component {
   render() {
     const { isSignUp, name, email, password, error } = this.state;
     return (
+      <div className="AuthContainer">
+      <h1 className="auth-logo">Movi-Bytes</h1>
       <form className='Auth' onSubmit={this.handleSubmit}>
         {isSignUp && (
           <div>
             <label>
-              <span>Name</span>
+              {/* <span>Name</span> */}
               <input
                 name='name'
                 value={name}
                 required={true}
                 onChange={this.handleNameChange}
+                placeholder="Name"
               />
             </label>
           </div>
@@ -65,25 +69,27 @@ export default class Auth extends Component {
 
         <div>
           <label>
-            <span>Email</span>
+            {/* <span>Email</span> */}
             <input
               name='email'
               value={email}
               required={true}
               onChange={this.handleEmailChange}
+              placeholder="Email"
             />
           </label>
         </div>
 
         <div>
           <label>
-            <span>Password</span>
+            {/* <span>Password</span> */}
             <input
               name='password'
               type='password'
               value={password}
               required={true}
               onChange={this.handlePasswordChange}
+              placeholder="Password"
             />
           </label>
         </div>
@@ -94,10 +100,11 @@ export default class Auth extends Component {
 
         <div>
           <button type='button' className='switch' onClick={this.handleSwitch}>
-            {isSignUp ? 'Have an account?' : 'Need to create an acount?'}
+            {isSignUp ? 'Have an account?' : 'Need to create an account?'}
           </button>
         </div>
       </form>
+      </div>
     );
   }
 }

@@ -59,7 +59,7 @@ export async function getMyList() {
   const response = await request
     .get('/api/me/movies/list')
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-  console.log(`got your list: ${response.body}`);
+  // console.log(`got your list: ${response.body}`);
   return response.body;
 }
 
@@ -75,11 +75,11 @@ export async function isInMyList(movieId) {
     .get(`/api/me/movies/${movieId}/list`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
   if (response.body === null) {
-    console.log(`you need to add ${movieId} to your movies`);
+    // console.log(`you need to add ${movieId} to your movies`);
     return false;
   } else {
     const { myList } = response.body;
-    console.log(`${movieId} ${myList ? 'is' : 'is not'} in your list`);
+    // console.log(`${movieId} ${myList ? 'is' : 'is not'} in your list`);
     return myList;
   }
 }
@@ -102,14 +102,14 @@ export async function changeFavorite(movie) {
 
 export async function changeMyList(movie) {
   if (await isInMyList(movie.movieId)) {
-    console.log(`changing ${movie.movieId}'s myList to ${!movie.myList}`);
+    // console.log(`changing ${movie.movieId}'s myList to ${!movie.myList}`);
     return await request
       .put(`/api/me/movies/${movie.movieId}/list`)
       .set('Authorization', window.localStorage.getItem('TOKEN'))
       .send({ myList: !movie.myList });
   } else {
     movie.myList = true;
-    console.log(`adding ${movie.movieId} to your movies`);
+    // console.log(`adding ${movie.movieId} to your movies`);
     return await addMovie(movie);
   }
 }

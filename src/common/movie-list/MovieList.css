@@ -1,0 +1,14 @@
+.MovieList ul{
+  display: flex;
+  list-style: none;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.MovieList::-webkit-scrollbar {
+  display: none;
+}
+
+.MovieList .Title {
+  padding-left: 16px;
+}

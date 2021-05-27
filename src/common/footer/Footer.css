@@ -1,0 +1,16 @@
+.Footer {
+  
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-text {
+  border-top: 1px solid lightgray;
+  text-align: center;
+  padding: 1rem 0 0.5rem 0;
+  opacity: 0.7;
+  width: 95%;
+  margin-top: 1rem;
+}

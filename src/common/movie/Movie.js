@@ -61,10 +61,13 @@ export default class Movie extends Component {
             src={movie.poster}
             alt={movie.name}
           />
-          <button onClick={this.handleClick}>
-            {isInMyList ? '- My-List' : '+ My-List'}
+          <button 
+            onClick={this.handleClick}
+            className={isInMyList ? "remove-btn" : "my-list-btn"}>
+            {isInMyList ? 'Remove' : 'Add to My List'}
           </button>
         </Link>
+        
       </li>
     );
   }
