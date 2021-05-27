@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.Movie img {
+  height: 200px;
+}
+
 .fave-button {
   position: absolute;
   z-index: 0;
