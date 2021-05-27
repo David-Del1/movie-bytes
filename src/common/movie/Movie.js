@@ -1,45 +1,63 @@
 import React, { Component } from 'react';
-import { isMyFavorite } from '../utils/movies-api.js';
+import {
+  isMyFavorite,
+  addFavorite,
+  deleteFavorite,
+} from '../utils/movies-api.js';
 import { Link } from 'react-router-dom';
 import './Movie.css';
 
 export default class Movie extends Component {
   state = {
-    isFavorite: false,
+    isFavorite: !!this.props.updateFavorites,
   };
 
   async componentDidMount() {
-    const { movie } = this.props;
-    const token = window.localStorage.getItem('TOKEN');
-    this.setState({
-      isFavorite: token ? await isMyFavorite(movie.movieId) : false,
-    });
+    if (!this.state.isFavorite) {
+      const { movie } = this.props;
+      const token = window.localStorage.getItem('TOKEN');
+      this.setState({
+        isFavorite: token ? await isMyFavorite(movie.movieId) : false,
+      });
+    }
   }
 
-  handleClick = (e) => {
+  handleClick = async (e) => {
     e.preventDefault();
-    const token = window.localStorage.getItem('TOKEN');
-    if (token === null) {
-      window.alert('You Must Be Logged In To Add Movies To Favorites');
+    //debugger;
+    const { isFavorite } = this.state;
+    if (
+      isFavorite &&
+      !window.confirm(
+        'Are you sure you wish to remove this movie from your favorites?'
+      )
+    )
       return;
-    } else {
-      debugger;
-      if (
-        this.state.isFavorite &&
-        !window.confirm(
-          'Are you sure you wish to remove this movie from your favorites?'
-        )
-      ) {
-        return;
+    if (!window.localStorage.getItem('TOKEN')) {
+      window.alert('You must be logged in to add this movie to favorites');
+      return;
+    }
+    try {
+      const { movie, updateFavorites } = this.props;
+      if (!isFavorite) {
+        const response = await addFavorite(movie);
+        if (response.status !== 200) {
+          throw new Error(response.body);
+        }
+        this.setState({ isFavorite: !isFavorite });
+      } else {
+        const response = await deleteFavorite(movie.movieId);
+        if (response.status !== 200) {
+          throw new Error(response.body);
+        }
+        if (updateFavorites) {
+          updateFavorites(response.body);
+        } else {
+          this.setState({ isFavorite: !isFavorite });
+        }
       }
-      try {
-        const { movie, onFavorited } = this.props;
-        const isFavorite = !this.state.isFavorite;
-        onFavorited(movie, isFavorite);
-        this.setState({ isFavorite });
-      } catch (err) {
-        console.log(err.message);
-      }
+    } catch (err) {
+      console.log(err.message);
     }
   };
 

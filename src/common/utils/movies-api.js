@@ -75,43 +75,10 @@ export async function addFavorite(favorite) {
   return response;
 }
 
-export async function deleteFavorite(id) {
+export async function deleteFavorite(movieId) {
   const response = await request
-    .delete(`/api/me/favorites/${id}`)
+    .delete(`/api/me/favorites/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
 
   return response;
-}
-
-export async function favoritesHandler(movie, isFavorite, favorites) {
-  try {
-    if (isFavorite) {
-      const response = await addFavorite(movie);
-      if (response.status !== 200) {
-        throw new Error(response.body);
-      }
-      const favorite = response.body;
-      // add artwork to favorites array
-      favorites.splice(1, 0, favorite);
-    } else {
-      // find the artwork id to delete
-      let index = 0;
-      for (let i = 0; i < favorites.length; i++) {
-        if (favorites[i].movieId === movie.movieId) {
-          index = i;
-          break;
-        }
-      }
-      const favoriteId = favorites[index].id;
-      const response = await deleteFavorite(favoriteId);
-      if (response.status !== 200) {
-        throw new Error(response.body);
-      }
-      // delete the artwork from favorites array
-      favorites.splice(index, 1);
-    }
-  } catch (err) {
-    console.log(err.message);
-  }
-  return favorites;
 }
