@@ -1,9 +1,17 @@
 .Movie {
   position: relative;
+  padding: 0.5rem;
+  transition: transform ease-in-out 0.2s;
+  
+}
+
+.Movie:hover {
+  transform: scale(1.1);
 }
 
 .Movie img {
-  height: 200px;
+  height: 350px;
+  box-shadow: 0px 0px 10px 2px black;
 }
 
 .fave-button {
