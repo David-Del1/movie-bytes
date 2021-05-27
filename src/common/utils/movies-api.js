@@ -48,6 +48,13 @@ export async function fetchMovieDetail(movieId) {
   return response.body;
 }
 
+export async function fetchMovieTrailerId(movieId) {
+  const response = await request
+    .get(`/api/movies/preview/${movieId}`)
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  return response.body;
+}
+
 export async function getMyFavorites() {
   const response = await request
     .get('/api/me/movies/favorites')
