@@ -1,27 +1,52 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { NetlifyPlugin } = require('netlify-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: 'app.bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
-  plugins: [new HtmlWebpackPlugin({
-    template: './src/index.html'
-  })]
-}
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+    new NetlifyPlugin({
+      redirects: [
+        {
+          from: '/api/*',
+          to: 'https://still-oasis-03522.herokuapp.com/api/:splat',
+          status: 200,
+          force: true,
+          conditions: {
+            role: ['admin', 'cms'],
+          },
+        },
+        {
+          from: '/*',
+          to: '/index.html',
+          status: 200,
+          force: true,
+          conditions: {
+            role: ['admin', 'cms'],
+          },
+        },
+      ],
+    }),
+  ],
+};
