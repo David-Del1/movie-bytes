@@ -63,7 +63,7 @@ export async function getMyList() {
   return response.body;
 }
 
-export async function isNewMovie() {
+export async function isNewMovie(movieId) {
   const response = await request
     .get(`/api/me/movies/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
@@ -81,7 +81,7 @@ export async function isMyFavorite(movieId) {
   }
 }
 
-export async function isInMyList(movieId) {
+export async function getIsInMyList(movieId) {
   const response = await request
     .get(`/api/me/movies/${movieId}/list`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
-  isInMyList,
+  getIsInMyList,
   changeMyList,
   isMyFavorite,
   changeFavorite,
   addMovie,
+  isNewMovie,
 } from '../utils/movies-api.js';
 import { Link } from 'react-router-dom';
 import './Movie.css';
@@ -13,18 +14,20 @@ export default class Movie extends Component {
   state = {
     isChildOfMyList: !!this.props.updateMyList,
     isInMyList: false,
-    isUpVoted: null,
-    isDownVoted: null,
+    isUpVoted: false,
+    isDownVoted: false,
   };
 
   async componentDidMount() {
     let { isChildOfMyList, isInMyList, isUpVoted, isDownVoted } = this.state;
     const token = window.localStorage.getItem('TOKEN');
-    if (!isChildOfMyList) {
-      const { movie } = this.props;
-      isInMyList = token ? await isInMyList(movie.movieId) : false;
+    const { movie } = this.props;
+    if (isChildOfMyList) {
+      isInMyList = true;
+    } else {
+      isInMyList = token ? await getIsInMyList(movie.movieId) : false;
     }
-    const favorite = await isMyFavorite(movie.movieId);
+    const favorite = token ? await isMyFavorite(movie.movieId) : null;
     if (favorite !== null) {
       favorite ? (isUpVoted = true) : (isDownVoted = true);
     }
@@ -33,7 +36,7 @@ export default class Movie extends Component {
 
   handleMyList = async (e) => {
     e.preventDefault();
-    const { isInMyList } = this.state;
+    const { isInMyList, isChildOfMyList } = this.state;
     if (
       isInMyList &&
       !window.confirm(
@@ -46,16 +49,16 @@ export default class Movie extends Component {
       return;
     }
     try {
-      const { movie, updateMyList } = this.props;
-      // if it is a new movie
-      if (newMovie) addMovie;
-      else changeMyList;
-      movie.myList = isInMyList;
-      const response = await changeMyList(movie);
+      const { movie } = this.props;
+      movie.myList = !isInMyList;
+      const response = (await isNewMovie(movie.movieId))
+        ? await addMovie(movie)
+        : await changeMyList(movie);
       if (response.status !== 200) {
         throw new Error(response.body);
       }
       if (isChildOfMyList) {
+        const { updateMyList } = this.props;
         updateMyList(response.body);
       } else {
         this.setState({ isInMyList: !isInMyList });
@@ -65,24 +68,62 @@ export default class Movie extends Component {
     }
   };
 
-  handleUpVote = async (e) => {
-    e.preventDefault();
-    const { isUpvoted } = this.state;
+  async handleVote(movie) {
     try {
-      let { movie } = this.props;
-      movie.favorite = isUpvoted;
-      const response = await changeFavorite(movie);
+      const response = (await isNewMovie(movie.movieId))
+        ? await addMovie(movie)
+        : await changeFavorite(movie);
       if (response.status !== 200) {
         throw new Error(response.body);
-      } else {
-        movie = response.body;
-        const favorite = movie.favorite;
-        if (favorite !== null) {
-          favorite
-            ? this.setState({ isUpvoted: true })
-            : this.setState({ isDownvoted: true });
-        }
       }
+      return true;
+    } catch (err) {
+      console.log(err.message);
+      return false;
+    }
+  }
+
+  handleUpVote = async (e) => {
+    e.preventDefault();
+    if (!window.localStorage.getItem('TOKEN')) {
+      window.alert('You must be logged in to upvote this movie');
+      return;
+    }
+    let { isUpVoted, isDownVoted } = this.state;
+    try {
+      const { movie } = this.props;
+      if (isUpVoted) {
+        isUpVoted = false;
+        movie.favorite = null;
+      } else {
+        movie.favorite = true;
+        isUpVoted = true;
+        isDownVoted = false;
+      }
+      if (this.handleVote(movie)) this.setState({ isUpVoted, isDownVoted });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  handleDownVote = async (e) => {
+    e.preventDefault();
+    if (!window.localStorage.getItem('TOKEN')) {
+      window.alert('You must be logged in to downvote this movie');
+      return;
+    }
+    let { isUpVoted, isDownVoted } = this.state;
+    try {
+      const { movie } = this.props;
+      if (isDownVoted) {
+        isDownVoted = false;
+        movie.favorite = null;
+      } else {
+        movie.favorite = false;
+        isUpVoted = false;
+        isDownVoted = true;
+      }
+      if (this.handleVote(movie)) this.setState({ isUpVoted, isDownVoted });
     } catch (err) {
       console.log(err.message);
     }
