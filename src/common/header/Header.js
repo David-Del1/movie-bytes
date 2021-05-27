@@ -41,17 +41,14 @@ export default class Header extends Component {
           <h1 className="logo">Movi-Bytes</h1>
         </Link>
 
-        
-        
-        <Link to='/favorites'>Favorites</Link>
-        <Link to='/my-list'>My List</Link>
+       
 
         <form onSubmit={this.handleSubmit}>
           <input onChange={this.handleChange} value={search} placeholder="Search for Movie"/>
         </form>
-        {/* <button onClick={this.handleClick}>
-          {token ? 'Sign Out' : 'Sign In'}
-        </button> */}
+       
+
+        <Link to='/my-list'>My Watch List</Link>
 
         <img
         className="nav_avatar"

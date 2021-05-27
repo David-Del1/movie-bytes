@@ -34,7 +34,10 @@ export default class MyList extends Component {
     return (
       <div className='MyList'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
-        <MovieList movies={myList} updateMyList={this.handleUpdate} />
+        <div className="container">
+          <MovieList movies={myList} updateMyList={this.handleUpdate} />
+        </div>
+        
         <Footer />
       </div>
     );
