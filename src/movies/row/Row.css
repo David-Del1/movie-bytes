@@ -1,8 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 * {
-  font-family: 'Courier New', Courier, monospace;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-family: 'Bebas Neue', cursive;
+}
+
+.row h2 {
+  font-size: 2rem;
 }
 
 .row_posters {
@@ -20,7 +29,7 @@
  
   height: 100%;
   object-fit: contain;
-  max-height: 100px;
+  max-height: 300px;
   margin-right: 10px;
   transition: transform 450ms;
 }

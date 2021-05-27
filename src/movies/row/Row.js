@@ -47,10 +47,10 @@ export default class Row extends Component {
                 src={movie.poster}
                 alt={movie.name}
               />
-              <button onClick={this.handleClick}>
+              {/* <button onClick={this.handleClick}>
                 {' '}
                 {favorites[index] ? '♥️' : '♡'}
-              </button>
+              </button> */}
             </Link>
           ))}
         </div>

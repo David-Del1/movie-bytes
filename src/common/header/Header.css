@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato&display=swap');
+
+.Header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  font-family: 'Lato', sans-serif;
+}
+
+.Header a {
+  transition: color ease-in-out 0.2s;
+}
+
+.Header a:hover {
+  color: rgb(45, 194, 194);
+  
+}
+
+.Header .logo {
+  left: 0;
+  height: 80px;
+  object-fit: contain;
+}
+
+.Header input {
+  font-size: 16px;
+}
+
+.nav_avatar {
+  
+  margin-right: 0.8rem;
+  width: 30px;
+  object-fit: contain;
+}

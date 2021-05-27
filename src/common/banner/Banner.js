@@ -39,10 +39,10 @@ function Banner({ fetchUrl }) {
         </h1>
 
         <div className='banner_buttons'>
-          <button className='banner_button'>Play</button>
-          <button className='banner_button'>My List</button>
+          <button className='banner_button'>Favorite</button>
+          <button className='banner_button'>Add to My List</button>
         </div>
-        <h1 className='banner_description'>{truncate(movie?.overview, 150)}</h1>
+        <h1 className='banner_description'>{truncate(movie?.overview, 180)}</h1>
       </div>
     </header>
   );

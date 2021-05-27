@@ -46,8 +46,13 @@ export default class Movie extends Component {
             src={movie.poster}
             alt={movie.name}
           />
-          <button onClick={this.handleClick}>{isFavorite ? '♥️' : '♡'}</button>
         </Link>
+          {/* <button 
+            onClick={this.handleClick}
+            className="fave-button">
+              {isFavorite ? '♥️' : '♡'}
+          </button> */}
+        
       </li>
     );
   }
