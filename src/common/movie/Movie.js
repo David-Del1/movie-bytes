@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { isMyFavorite } from '../utils/movies-api.js';
 import { Link } from 'react-router-dom';
 import './Movie.css';
-import Favorites from '../../favorites/Favorites.js';
 
 export default class Movie extends Component {
   state = {
@@ -10,23 +9,25 @@ export default class Movie extends Component {
   };
 
   async componentDidMount() {
+    const { movie } = this.props;
     const token = window.localStorage.getItem('TOKEN');
     this.setState({
-      isFavorite: (token ? await isMyFavorite(this.props.movie.movieId) : false)
+      isFavorite: token ? await isMyFavorite(movie.movieId) : false,
     });
   }
 
   handleClick = (e) => {
     e.preventDefault();
     const token = window.localStorage.getItem('TOKEN');
-    if (typeof token === undefined) {
+    if (token === null) {
       window.alert('You Must Be Logged In To Add Movies To Favorites');
       return;
     } else {
+      debugger;
       if (
         this.state.isFavorite &&
         !window.confirm(
-          'Are you sure you wish to remove this from your favorites?'
+          'Are you sure you wish to remove this movie from your favorites?'
         )
       ) {
         return;

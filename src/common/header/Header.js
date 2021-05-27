@@ -19,8 +19,14 @@ export default class Header extends Component {
 
   handleClick = (e) => {
     e.preventDefault();
-
-    // show auth page
+    const { history } = this.props;
+    const token = window.localStorage.getItem('TOKEN');
+    if (token === null) {
+      history.push('/auth');
+    } else {
+      window.localStorage.removeItem('TOKEN');
+      history.push('/');
+    }
   };
 
   render() {
@@ -36,7 +42,7 @@ export default class Header extends Component {
         <Link to='/favorites'>Favorites</Link>
         <Link to='/my-list'>My List</Link>
         <button onClick={this.handleClick}>
-          {token ? 'Sign Out' : 'Sign In'}
+          {token ? 'Sign Out' : 'Log In'}
         </button>
       </div>
     );
