@@ -30,8 +30,7 @@ export default class App extends Component {
     this.setState({ token: user.token, userId: user.id });
   };
 
-  handleSearch = async (search, history) => {
-    console.log(search);
+  handleSearch = async (search) => {
     try {
       this.setState({ movies: await searchMovies(search) });
     } catch (err) {
@@ -41,7 +40,6 @@ export default class App extends Component {
 
   render() {
     const { movies, token } = this.state;
-    console.log(movies);
     return (
       <div className='App'>
         <Router>
