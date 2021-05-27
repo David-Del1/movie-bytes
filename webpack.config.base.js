@@ -30,7 +30,7 @@ module.exports = {
       redirects: [
         {
           from: '/api/*',
-          to: 'https://still-oasis-03522.herokuapp.com/api/:splat',
+          to: 'https://still-brushlands-56791.herokuapp.com/api/:splat',
           status: 200,
           force: true,
           conditions: {
