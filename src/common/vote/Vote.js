@@ -31,9 +31,9 @@ export default class Vote extends Component {
         isDownVoted,
         clicked
       );
-      if (updateVoteCounts) updateVoteCounts();
       if (setState)
         this.setState({ isUpVoted: upVoted, isDownVoted: downVoted });
+      if (updateVoteCounts) updateVoteCounts();
     } catch (err) {
       console.log(err.message);
     }

@@ -12,6 +12,7 @@ import './MovieDetail.css';
 export default class MovieDetail extends Component {
   state = {
     movie: {},
+    isMovieLoaded: false,
     movieTrailer: '',
     upVotes: 0,
     downVotes: 0,
@@ -22,33 +23,43 @@ export default class MovieDetail extends Component {
     try {
       const movie = await fetchMovieDetail(match.params.id);
       const movieTrailer = await fetchMovieTrailerId(match.params.id);
+      const { upVotes, downVotes } = await getVoteCounts(movie.movieId);
       this.setState({
         movie,
         movieTrailer,
+        upVotes,
+        downVotes,
       });
     } catch (err) {
       console.log(err.message);
+    } finally {
+      this.setState({ isMovieLoaded: true });
     }
   }
 
-  async handleVoteCounts() {
+  handleVoteCounts = async () => {
     const { movie } = this.state;
     const { upVotes, downVotes } = await getVoteCounts(movie.movieId);
     this.setState({ upVotes, downVotes });
-  }
+  };
 
   render() {
-    const { movie, movieTrailer, upVotes, downVotes } = this.state;
-    const { onUser, onSearch } = this.props;
+    const { movie, isMovieLoaded, movieTrailer, upVotes, downVotes } =
+      this.state;
+    const { history, onUser, onSearch } = this.props;
     return (
-      <>
-        <Header onUser={onUser} onSearch={onSearch} />
+      <div>
+        <Header history={history} onUser={onUser} onSearch={onSearch} />
         <ToggleMyList movie={movie} />
-        <Vote
-          movie={movie}
-          voteCounts={{ upVotes, downVotes }}
-          updateVoteCounts={this.handleVoteCounts}
-        />
+        {isMovieLoaded ? (
+          <Vote
+            movie={movie}
+            voteCounts={{ upVotes, downVotes }}
+            updateVoteCounts={this.handleVoteCounts}
+          />
+        ) : (
+          '...loading'
+        )}
         <div
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
@@ -66,7 +77,7 @@ export default class MovieDetail extends Component {
           ></iframe>
           <p className='movie-overview'>{movie.overview}</p>
         </div>
-      </>
+      </div>
     );
   }
 }

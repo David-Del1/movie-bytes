@@ -173,10 +173,10 @@ export async function voteHandler(movie, upVote, downVote, clicked) {
       isDownVoted = true;
     }
   }
-  return { setState: updateFavorite(movie), isUpVoted, isDownVoted };
+  return { setState: await updateFavorite(movie), isUpVoted, isDownVoted };
 }
 
 export async function getVoteCounts(movieId) {
-  const response = await request.get(`/api/movies/${movie.movieId}/votes`);
+  const response = await request.get(`/api/movies/${movieId}/votes`);
   return response.body;
 }
