@@ -87,6 +87,7 @@ export default class App extends Component {
 
             <Route
               path='/movies/:id'
+              exact={true}
               render={(routerProps) => (
                 <MovieDetail
                   {...routerProps}
