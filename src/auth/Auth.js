@@ -51,7 +51,7 @@ export default class Auth extends Component {
     return (
       <div 
         className="AuthContainer"
-        style={{backgroundImage: "url(src/assets/auth-bg.jpeg)"}}
+        style={{backgroundImage: "url(/assets/auth-bg.jpeg)"}}
       >
       <h1 className="auth-logo">Movi-Bytes</h1>
       <form className='Auth' onSubmit={this.handleSubmit}>
