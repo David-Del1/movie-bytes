@@ -31,7 +31,7 @@ export default class MovieDetail extends Component {
     const { history, onUser, onSearch } = this.props;
     return (
       <>
-        <Header onUser={onUser} onSearch={onSearch} />
+        <Header onUser={onUser} onSearch={onSearch} history={history} />
         <div
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
