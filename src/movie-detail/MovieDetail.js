@@ -44,24 +44,12 @@ export default class MovieDetail extends Component {
   };
 
   render() {
-
     const { movie, isMovieLoaded, movieTrailer, upVotes, downVotes } =
       this.state;
     const { history, onUser, onSearch } = this.props;
     return (
       <div>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
-        
-        {isMovieLoaded ? (
-          <Vote
-            movie={movie}
-            voteCounts={{ upVotes, downVotes }}
-            updateVoteCounts={this.handleVoteCounts}
-          />
-        ) : (
-          '...loading'
-        )}
-
         <div
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
@@ -77,10 +65,17 @@ export default class MovieDetail extends Component {
             allowfullscreen
             className='trailer'
           ></iframe>
-
           <p className='movie-overview'>{movie.overview}</p>
-
-           <ToggleMyList movie={movie} className="detail-AddToList-btn"/>
+          {isMovieLoaded ? (
+            <Vote
+              movie={movie}
+              voteCounts={{ upVotes, downVotes }}
+              updateVoteCounts={this.handleVoteCounts}
+            />
+          ) : (
+            '...loading'
+          )}
+          {isMovieLoaded ? <ToggleMyList movie={movie} /> : '...loading'}
         </div>
       </div>
     );

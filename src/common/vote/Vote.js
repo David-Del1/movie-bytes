@@ -25,7 +25,7 @@ export default class Vote extends Component {
     try {
       const { movie, updateVoteCounts } = this.props;
       const { isUpVoted, isDownVoted } = this.state;
-      const { setState, upVoted, downVoted } = voteHandler(
+      const { setState, upVoted, downVoted } = await voteHandler(
         movie,
         isUpVoted,
         isDownVoted,
