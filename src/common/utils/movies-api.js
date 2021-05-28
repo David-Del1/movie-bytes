@@ -119,3 +119,66 @@ export async function changeMyList(movie) {
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send({ myList: movie.myList });
 }
+
+export async function toggleMyListHandler(movie, isInMyList) {
+  if (
+    isInMyList &&
+    !window.confirm(
+      'Are you sure you wish to remove this movie from your list?'
+    )
+  )
+    return null;
+  if (!window.localStorage.getItem('TOKEN')) {
+    window.alert('You must be logged in to add this movie to your list');
+    return null;
+  }
+  movie.myList = !isInMyList;
+  const response = (await isNewMovie(movie.movieId))
+    ? await addMovie(movie)
+    : await changeMyList(movie);
+  if (response.status !== 200) {
+    throw new Error(response.body);
+    return null;
+  }
+  return response.body;
+}
+
+async function updateFavorite(movie) {
+  const response = (await isNewMovie(movie.movieId))
+    ? await addMovie(movie)
+    : await changeFavorite(movie);
+  if (response.status !== 200) {
+    throw new Error(response.body);
+    return false;
+  }
+  return true;
+}
+
+export async function voteHandler(movie, upVote, downVote, clicked) {
+  if (!window.localStorage.getItem('TOKEN')) {
+    window.alert('You must be logged in to upvote this movie');
+    return { setState: false, upVote, downVote };
+  }
+  let isUpVoted = upVote,
+    isDownVoted = downVote;
+  if (clicked === 'upVote') {
+    if (isUpVoted) {
+      isUpVoted = false;
+      movie.favorite = null;
+    } else {
+      movie.favorite = true;
+      isUpVoted = true;
+      isDownVoted = false;
+    }
+  } else {
+    if (isDownVoted) {
+      isDownVoted = false;
+      movie.favorite = null;
+    } else {
+      movie.favorite = false;
+      isUpVoted = false;
+      isDownVoted = true;
+    }
+  }
+  return { setState: updateFavorite(movie), isUpVoted, isDownVoted };
+}

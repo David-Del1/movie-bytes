@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../common/header/Header';
+import ToggleMyList from '../toggle-my-list/ToggleMyList.js';
+import Vote from '../vote/Vote.js';
 import {
   fetchMovieDetail,
   fetchMovieTrailerId,
@@ -18,8 +20,8 @@ export default class MovieDetail extends Component {
       const movie = await fetchMovieDetail(match.params.id);
       const movieTrailer = await fetchMovieTrailerId(match.params.id);
       this.setState({
-        movie: movie,
-        movieTrailer: movieTrailer,
+        movie,
+        movieTrailer,
       });
     } catch (err) {
       console.log(err.message);
@@ -32,6 +34,8 @@ export default class MovieDetail extends Component {
     return (
       <>
         <Header onUser={onUser} onSearch={onSearch} />
+        <ToggleMyList movie={movie} updateMyList={null} />
+        <Vote movie={movie} />
         <div
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
