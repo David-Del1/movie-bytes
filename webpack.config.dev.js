@@ -8,6 +8,7 @@ module.exports = merge(baseConfig, {
     proxy: {
       '/api': 'http://localhost:8001',
     },
+    historyApiFallback: true,
   },
   devtool: 'source-map',
   // disableHostCheck: true
