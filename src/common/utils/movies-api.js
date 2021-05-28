@@ -66,7 +66,6 @@ export async function getMyList() {
   const response = await request
     .get('/api/me/movies/list')
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-  // console.log(`got your list: ${response.body}`);
   return response.body;
 }
 
@@ -74,7 +73,7 @@ export async function isNewMovie(movieId) {
   const response = await request
     .get(`/api/me/movies/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-  return response.body ? true : false;
+  return response.body ? false : true;
 }
 export async function isMyFavorite(movieId) {
   const response = await request
