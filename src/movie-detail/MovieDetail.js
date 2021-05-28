@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../common/header/Header';
-import ToggleMyList from '../toggle-my-list/ToggleMyList.js';
-import Vote from '../vote/Vote.js';
+import ToggleMyList from '../common/toggle-my-list/ToggleMyList.js';
+import Vote from '../common/vote/Vote.js';
 import {
   fetchMovieDetail,
   fetchMovieTrailerId,

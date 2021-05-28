@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { isMyFavorite } from '../utils/movies-api.js';
+import { isMyFavorite, voteHandler } from '../utils/movies-api.js';
 import './Vote.css';
 
 export default class Vote extends Component {
   state = {
-    isUpVoted: false, isDownVoted: false
+    isUpVoted: false,
+    isDownVoted: false,
   };
 
   async componentDidMount() {
@@ -20,17 +21,16 @@ export default class Vote extends Component {
 
   handleVote = async (e, clicked) => {
     e.preventDefault();
-    let setState = false;
     const { movie } = this.props;
-    let { isUpVoted, isDownVoted } = this.state;
     try {
-      ({ setState, isUpVoted, isDownVoted }) = voteHandler(
+      const { setState, upVoted, downVoted } = voteHandler(
         movie,
         isUpVoted,
         isDownVoted,
         clicked
       );
-      if (setState) this.setState({ isUpVoted, isDownVoted });
+      if (setState)
+        this.setState({ isUpVoted: upVoted, isDownVoted: downVoted });
     } catch (err) {
       console.log(err.message);
     }

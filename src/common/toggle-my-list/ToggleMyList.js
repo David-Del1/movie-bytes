@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import {
-  getIsInMyList,
-  toggleMyListHandler,
-} from '../toggle-my-list/ToggleMyList.js';
-import '.ToggleMyList.css';
+import { getIsInMyList, toggleMyListHandler } from '../utils/movies-api.js';
+import './ToggleMyList.css';
 
 export default class ToggleMyList extends Component {
   state = {
