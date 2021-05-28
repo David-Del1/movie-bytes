@@ -144,6 +144,8 @@ export async function toggleMyListHandler(movie, isInMyList) {
 }
 
 async function updateFavorite(movie) {
+  const newMovie = await isNewMovie(movie.movieId);
+  if (newMovie) movie.myList = false;
   const response = (await isNewMovie(movie.movieId))
     ? await addMovie(movie)
     : await changeFavorite(movie);

@@ -9,6 +9,7 @@ export default class Vote extends Component {
   };
 
   async componentDidMount() {
+    const { movie } = this.props;
     const token = window.localStorage.getItem('TOKEN');
     const favorite = token ? await isMyFavorite(movie.movieId) : null;
     let isUpVoted = false,
@@ -21,8 +22,9 @@ export default class Vote extends Component {
 
   handleVote = async (e, clicked) => {
     e.preventDefault();
-    const { movie } = this.props;
     try {
+      const { movie } = this.props;
+      const { isUpVoted, isDownVoted } = this.state;
       const { setState, upVoted, downVoted } = voteHandler(
         movie,
         isUpVoted,
@@ -37,12 +39,19 @@ export default class Vote extends Component {
   };
 
   render() {
+    const { isUpVoted, isDownVoted } = this.state;
     return (
       <div className='btn-container'>
-        <button onClick={this.handleVote('upVote')} className='vote-btn up'>
+        <button
+          onClick={(e) => this.handleVote(e, 'upVote')}
+          className='vote-btn up'
+        >
           {isUpVoted ? '⬆️' : '⬆'}
         </button>
-        <button onClick={this.handleVote('downVote')} className='vote-btn down'>
+        <button
+          onClick={(e) => this.handleVote(e, 'downVote')}
+          className='vote-btn down'
+        >
           {isDownVoted ? '⬇️' : '⬇'}
         </button>
       </div>
