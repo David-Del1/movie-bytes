@@ -23,7 +23,6 @@ export default class Vote extends Component {
   handleVote = async (e, clicked) => {
     e.preventDefault();
     try {
-      debugger;
       const { movie, updateVoteCounts } = this.props;
       const { isUpVoted, isDownVoted } = this.state;
       const { setState, upVoted, downVoted } = await voteHandler(
@@ -32,7 +31,6 @@ export default class Vote extends Component {
         isDownVoted,
         clicked
       );
-      debugger;
       if (setState)
         this.setState({ isUpVoted: upVoted, isDownVoted: downVoted });
       if (updateVoteCounts) updateVoteCounts();

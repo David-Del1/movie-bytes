@@ -38,10 +38,8 @@ export default class MovieDetail extends Component {
   }
 
   handleVoteCounts = async () => {
-    debugger;
     const { movie } = this.state;
     const { upVotes, downVotes } = await getVoteCounts(movie.movieId);
-    debugger;
     this.setState({ upVotes, downVotes });
   };
 
