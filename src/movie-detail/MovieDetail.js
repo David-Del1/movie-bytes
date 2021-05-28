@@ -28,7 +28,7 @@ export default class MovieDetail extends Component {
 
   render() {
     const { movie, movieTrailer } = this.state;
-    const { onUser, onSearch } = this.props;
+    const { history, onUser, onSearch } = this.props;
     return (
       <>
         <Header onUser={onUser} onSearch={onSearch} />

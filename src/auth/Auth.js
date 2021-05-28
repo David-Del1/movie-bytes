@@ -49,69 +49,69 @@ export default class Auth extends Component {
   render() {
     const { isSignUp, name, email, password, error } = this.state;
     return (
-      <div 
+      <div
         className="AuthContainer"
-        style={{backgroundImage: "url(src/assets/auth-bg.jpeg)"}}
+        style={{ backgroundImage: "url(../assets/auth-bg.jpeg)" }}
       >
-      <h1 className="auth-logo">Movi-Bytes</h1>
-      <form className='Auth' onSubmit={this.handleSubmit}>
-        {isSignUp && (
+        <h1 className="auth-logo">Movi-Bytes</h1>
+        <form className='Auth' onSubmit={this.handleSubmit}>
+          {isSignUp && (
+            <div>
+              <label>
+                {/* <span>Name</span> */}
+                <input
+                  name='name'
+                  value={name}
+                  required={true}
+                  onChange={this.handleNameChange}
+                  placeholder="Name"
+                />
+              </label>
+            </div>
+          )}
+
           <div>
             <label>
-              {/* <span>Name</span> */}
+              {/* <span>Email</span> */}
               <input
-                name='name'
-                value={name}
+                name='email'
+                value={email}
                 required={true}
-                onChange={this.handleNameChange}
-                placeholder="Name"
+                onChange={this.handleEmailChange}
+                placeholder="Email"
               />
             </label>
           </div>
-        )}
 
-        <div>
-          <label>
-            {/* <span>Email</span> */}
-            <input
-              name='email'
-              value={email}
-              required={true}
-              onChange={this.handleEmailChange}
-              placeholder="Email"
-            />
-          </label>
-        </div>
+          <div>
+            <label>
+              {/* <span>Password</span> */}
+              <input
+                name='password'
+                type='password'
+                value={password}
+                required={true}
+                onChange={this.handlePasswordChange}
+                placeholder="Password"
+              />
+            </label>
+          </div>
 
-        <div>
-          <label>
-            {/* <span>Password</span> */}
-            <input
-              name='password'
-              type='password'
-              value={password}
-              required={true}
-              onChange={this.handlePasswordChange}
-              placeholder="Password"
-            />
-          </label>
-        </div>
+          <div>
+            <button type='submit'>{isSignUp ? 'Sign Up' : 'Log In'}</button>
+          </div>
 
-        <div>
-          <button type='submit'>{isSignUp ? 'Sign Up' : 'Log In'}</button>
-        </div>
+          <div>
+            <button type='button' className='switch' onClick={this.handleSwitch}>
+              {isSignUp ? 'Have an account?' : 'Need to create an account?'}
+            </button>
+          </div>
 
-        <div>
-          <button type='button' className='switch' onClick={this.handleSwitch}>
-            {isSignUp ? 'Have an account?' : 'Need to create an account?'}
-          </button>
-        </div>
-        
-      </form>
-      {/* {error && window.alert('Oh no! Wrong Username or Password.')} */}
+        </form>
+        {/* {error && window.alert('Oh no! Wrong Username or Password.')} */}
       </div>
 
-      
+
     );
   }
 }
