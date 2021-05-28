@@ -23,7 +23,7 @@ export default class Vote extends Component {
   handleVote = async (e, clicked) => {
     e.preventDefault();
     try {
-      const { movie } = this.props;
+      const { movie, updateVoteCounts } = this.props;
       const { isUpVoted, isDownVoted } = this.state;
       const { setState, upVoted, downVoted } = voteHandler(
         movie,
@@ -31,6 +31,7 @@ export default class Vote extends Component {
         isDownVoted,
         clicked
       );
+      if (updateVoteCounts) updateVoteCounts();
       if (setState)
         this.setState({ isUpVoted: upVoted, isDownVoted: downVoted });
     } catch (err) {
@@ -39,6 +40,7 @@ export default class Vote extends Component {
   };
 
   render() {
+    const { voteCounts } = this.props;
     const { isUpVoted, isDownVoted } = this.state;
     return (
       <div className='btn-container'>
@@ -48,12 +50,14 @@ export default class Vote extends Component {
         >
           {isUpVoted ? '⬆️' : '⬆'}
         </button>
+        {voteCounts ? <p>{voteCounts.upVotes}</p> : ''}
         <button
           onClick={(e) => this.handleVote(e, 'downVote')}
           className='vote-btn down'
         >
           {isDownVoted ? '⬇️' : '⬇'}
         </button>
+        {voteCounts ? <p>{voteCounts.downVotes}</p> : ''}
       </div>
     );
   }

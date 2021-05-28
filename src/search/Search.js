@@ -11,10 +11,10 @@ export default class Search extends Component {
       <div className='Search'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
 
-        <div className="SearchMovies-container">
-          <MovieList movies={movies} updateMyList={null} />
+        <div className='SearchMovies-container'>
+          <MovieList movies={movies} />
         </div>
-        
+
         <Footer />
       </div>
     );

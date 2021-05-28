@@ -22,7 +22,7 @@ export default class ToggleMyList extends Component {
       const handledMovie = toggleMyListHandler(movie, isInMyList);
       if (handledMovie !== null) {
         const { updateMyList } = this.props;
-        if (updateMyList !== null) updateMyList(handledMovie);
+        if (updateMyList) updateMyList(handledMovie);
         this.setState({ isInMyList: !isInMyList });
       }
     } catch (err) {

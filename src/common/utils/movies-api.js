@@ -27,31 +27,22 @@ export async function signIn(credentials) {
 }
 
 export async function discoverMovies(fetchUrl) {
-  const response = await request
-    .get(fetchUrl)
-    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  const response = await request.get(fetchUrl);
   return response.body;
 }
 
 export async function searchMovies(search) {
-  const response = await request
-    .get('/api/movies')
-    .set('Authorization', window.localStorage.getItem('TOKEN'))
-    .query({ search: search });
+  const response = await request.get('/api/movies').query({ search: search });
   return response.body;
 }
 
 export async function fetchMovieDetail(movieId) {
-  const response = await request
-    .get(`/api/movies/${movieId}`)
-    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  const response = await request.get(`/api/movies/${movieId}`);
   return response.body;
 }
 
 export async function fetchMovieTrailerId(movieId) {
-  const response = await request
-    .get(`/api/movies/preview/${movieId}`)
-    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  const response = await request.get(`/api/movies/preview/${movieId}`);
   return response.body;
 }
 
@@ -183,4 +174,9 @@ export async function voteHandler(movie, upVote, downVote, clicked) {
     }
   }
   return { setState: updateFavorite(movie), isUpVoted, isDownVoted };
+}
+
+export async function getVoteCounts(movieId) {
+  const response = await request.get(`/api/movies/${movie.movieId}/votes`);
+  return response.body;
 }

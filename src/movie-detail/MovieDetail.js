@@ -3,6 +3,7 @@ import Header from '../common/header/Header';
 import ToggleMyList from '../common/toggle-my-list/ToggleMyList.js';
 import Vote from '../common/vote/Vote.js';
 import {
+  getVoteCounts,
   fetchMovieDetail,
   fetchMovieTrailerId,
 } from '../common/utils/movies-api';
@@ -12,6 +13,8 @@ export default class MovieDetail extends Component {
   state = {
     movie: {},
     movieTrailer: '',
+    upVotes: 0,
+    downVotes: 0,
   };
 
   async componentDidMount() {
@@ -28,14 +31,24 @@ export default class MovieDetail extends Component {
     }
   }
 
+  async handleVoteCounts() {
+    const { movie } = this.state;
+    const { upVotes, downVotes } = await getVoteCounts(movie.movieId);
+    this.setState({ upVotes, downVotes });
+  }
+
   render() {
-    const { movie, movieTrailer } = this.state;
+    const { movie, movieTrailer, upVotes, downVotes } = this.state;
     const { onUser, onSearch } = this.props;
     return (
       <>
         <Header onUser={onUser} onSearch={onSearch} />
-        <ToggleMyList movie={movie} updateMyList={null} />
-        <Vote movie={movie} />
+        <ToggleMyList movie={movie} />
+        <Vote
+          movie={movie}
+          voteCounts={{ upVotes, downVotes }}
+          updateVoteCounts={this.handleVoteCounts}
+        />
         <div
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
