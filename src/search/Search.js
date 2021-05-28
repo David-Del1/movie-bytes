@@ -14,7 +14,7 @@ export default class Search extends Component {
         <div className="SearchMovies-container">
           <MovieList movies={movies} updateMyList={null} />
         </div>
-        
+
         <Footer />
       </div>
     );
