@@ -49,11 +49,15 @@ export default class Auth extends Component {
   render() {
     const { isSignUp, name, email, password, error } = this.state;
     return (
+      <>
+      <header className="auth-header">
+        <h1 className="auth-logo">Movi-Bytes</h1>
+      </header>
       <div 
         className="AuthContainer"
         style={{backgroundImage: "url(/assets/auth-bg.jpeg)"}}
       >
-      <h1 className="auth-logo">Movi-Bytes</h1>
+      
       <form className='Auth' onSubmit={this.handleSubmit}>
         {isSignUp && (
           <div>
@@ -110,6 +114,8 @@ export default class Auth extends Component {
       </form>
       {/* {error && window.alert('Oh no! Wrong Username or Password.')} */}
       </div>
+
+      </>
 
       
     );
