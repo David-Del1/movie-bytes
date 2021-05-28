@@ -38,20 +38,21 @@ export default class MovieDetail extends Component {
   }
 
   handleVoteCounts = async () => {
+    debugger;
     const { movie } = this.state;
     const { upVotes, downVotes } = await getVoteCounts(movie.movieId);
+    debugger;
     this.setState({ upVotes, downVotes });
   };
 
   render() {
-
     const { movie, isMovieLoaded, movieTrailer, upVotes, downVotes } =
       this.state;
     const { history, onUser, onSearch } = this.props;
     return (
       <div>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
-        <ToggleMyList movie={movie} />
+
         {isMovieLoaded ? (
           <Vote
             movie={movie}
@@ -61,7 +62,7 @@ export default class MovieDetail extends Component {
         ) : (
           '...loading'
         )}
-
+        {isMovieLoaded ? <ToggleMyList movie={movie} /> : '...loading'}
         <div
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
