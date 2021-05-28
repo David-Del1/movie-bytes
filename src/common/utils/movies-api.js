@@ -91,24 +91,27 @@ export async function getIsInMyList(movieId) {
 }
 
 export async function addMovie(movie) {
-  return await request
+  const response = await request
     .post('/api/me/movies')
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send(movie);
+  return response;
 }
 
 export async function changeFavorite(movie) {
-  return await request
+  const response = await request
     .put(`/api/me/movies/${movie.movieId}/favorite`)
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send({ favorite: movie.favorite });
+  return response;
 }
 
 export async function changeMyList(movie) {
-  return await request
+  const response = await request
     .put(`/api/me/movies/${movie.movieId}/list`)
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send({ myList: movie.myList });
+  return response;
 }
 
 export async function toggleMyListHandler(movie, isInMyList) {
@@ -137,7 +140,7 @@ export async function toggleMyListHandler(movie, isInMyList) {
 async function updateFavorite(movie) {
   const newMovie = await isNewMovie(movie.movieId);
   if (newMovie) movie.myList = false;
-  const response = (await isNewMovie(movie.movieId))
+  const response = newMovie
     ? await addMovie(movie)
     : await changeFavorite(movie);
   if (response.status !== 200) {

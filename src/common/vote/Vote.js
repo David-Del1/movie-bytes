@@ -25,14 +25,14 @@ export default class Vote extends Component {
     try {
       const { movie, updateVoteCounts } = this.props;
       const { isUpVoted, isDownVoted } = this.state;
-      const { setState, upVoted, downVoted } = await voteHandler(
-        movie,
-        isUpVoted,
-        isDownVoted,
-        clicked
-      );
+      debugger;
+      const values = await voteHandler(movie, isUpVoted, isDownVoted, clicked);
+      debugger;
       if (setState)
-        this.setState({ isUpVoted: upVoted, isDownVoted: downVoted });
+        this.setState({
+          isUpVoted: values.isUpVoted,
+          isDownVoted: values.isDownVoted,
+        });
       if (updateVoteCounts) updateVoteCounts();
     } catch (err) {
       console.log(err.message);
