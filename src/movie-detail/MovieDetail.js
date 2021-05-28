@@ -50,17 +50,6 @@ export default class MovieDetail extends Component {
     return (
       <div>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
-
-        {isMovieLoaded ? (
-          <Vote
-            movie={movie}
-            voteCounts={{ upVotes, downVotes }}
-            updateVoteCounts={this.handleVoteCounts}
-          />
-        ) : (
-          '...loading'
-        )}
-        {isMovieLoaded ? <ToggleMyList movie={movie} /> : '...loading'}
         <div
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
@@ -77,6 +66,16 @@ export default class MovieDetail extends Component {
             className='trailer'
           ></iframe>
           <p className='movie-overview'>{movie.overview}</p>
+          {isMovieLoaded ? (
+            <Vote
+              movie={movie}
+              voteCounts={{ upVotes, downVotes }}
+              updateVoteCounts={this.handleVoteCounts}
+            />
+          ) : (
+            '...loading'
+          )}
+          {isMovieLoaded ? <ToggleMyList movie={movie} /> : '...loading'}
         </div>
       </div>
     );
