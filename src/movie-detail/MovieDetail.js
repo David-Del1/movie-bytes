@@ -51,7 +51,7 @@ export default class MovieDetail extends Component {
     return (
       <div>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
-        <ToggleMyList movie={movie} />
+        
         {isMovieLoaded ? (
           <Vote
             movie={movie}
@@ -77,7 +77,10 @@ export default class MovieDetail extends Component {
             allowfullscreen
             className='trailer'
           ></iframe>
+
           <p className='movie-overview'>{movie.overview}</p>
+
+           <ToggleMyList movie={movie} className="detail-AddToList-btn"/>
         </div>
       </div>
     );
