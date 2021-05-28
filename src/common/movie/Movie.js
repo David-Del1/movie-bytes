@@ -147,10 +147,18 @@ export default class Movie extends Component {
           >
             {isInMyList ? 'Remove' : 'Add to Watch List'}
           </button>
-          <button onClick={this.handleUpVote}>{isUpVoted ? '⬆️' : '⬆'}</button>
-          <button onClick={this.handleDownVote}>
-            {isDownVoted ? '⬇️' : '⬇'}
-          </button>
+          <div className="btn-container">
+            <button 
+              onClick={this.handleUpVote}
+              className="vote-btn up">{isUpVoted ? '⬆️' : '⬆'}
+            </button>
+            <button 
+              onClick={this.handleDownVote}
+              className="vote-btn down">
+              {isDownVoted ? '⬇️' : '⬇'}
+            </button>
+          </div>
+          
         </Link>
       </li>
     );

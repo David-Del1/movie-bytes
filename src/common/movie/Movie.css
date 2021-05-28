@@ -40,3 +40,29 @@
   margin: 10px 10px 0 0;
   cursor: pointer;
 }
+
+.btn-container {
+  
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vote-btn {
+  
+  z-index: 100;
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 24px;
+}
+
+.up {
+  color: green;
+}
+
+.down {
+  color: red;
+}

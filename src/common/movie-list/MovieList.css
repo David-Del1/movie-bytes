@@ -5,7 +5,7 @@
   overflow-y: hidden;
 }
 
-.MovieList::-webkit-scrollbar {
+.MovieList ul::-webkit-scrollbar {
   display: none;
 }
 
