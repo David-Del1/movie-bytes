@@ -44,6 +44,7 @@ export default class MovieDetail extends Component {
   };
 
   render() {
+
     const { movie, isMovieLoaded, movieTrailer, upVotes, downVotes } =
       this.state;
     const { history, onUser, onSearch } = this.props;
@@ -60,6 +61,7 @@ export default class MovieDetail extends Component {
         ) : (
           '...loading'
         )}
+
         <div
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
