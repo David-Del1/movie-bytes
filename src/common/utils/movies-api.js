@@ -76,21 +76,17 @@ export async function deleteFromMyList(movieId) {
 }
 
 export async function vote(movie) {
-  debugger;
   const response = await request
     .post('/api/me/movies/votes')
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send(movie);
-  debugger;
   return response;
 }
 
 export async function getMyVote(movieId) {
-  debugger;
   const response = await request
     .get(`/api/me/movies/votes/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-  debugger;
   if (response.body === null) {
     return { isUpVoted: false, isDownVoted: false };
   } else {
@@ -102,21 +98,17 @@ export async function getMyVote(movieId) {
 }
 
 export async function changeVote(movie) {
-  debugger;
   const response = await request
     .put(`/api/me/movies/votes/${movie.movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send({ favorite: movie.favorite });
-  debugger;
   return response;
 }
 
 export async function deleteVote(movieId) {
-  debugger;
   const response = await request
     .delete(`/api/me/movies/votes/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-  debugger;
   return response;
 }
 
@@ -152,7 +144,6 @@ export async function voteHandler(movie, isUpVoted, isDownVoted, clicked) {
     window.alert('You must be logged in to vote for this movie');
     return { setState: false, isUpVoted, isDownVoted };
   }
-  debugger;
   if (
     (isUpVoted && clicked === 'upVote') ||
     (isDownVoted && clicked === 'downVote')
@@ -191,6 +182,5 @@ export async function voteHandler(movie, isUpVoted, isDownVoted, clicked) {
       ? (isUpVoted = !isUpVoted)
       : (isDownVoted = !isDownVoted);
   }
-  debugger;
   return { setState: true, isUpVoted, isDownVoted };
 }
