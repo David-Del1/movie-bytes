@@ -13,7 +13,7 @@ export default class Vote extends Component {
     const token = window.localStorage.getItem('TOKEN');
     const { isUpVoted, isDownVoted } = token
       ? await getMyVote(movie.movieId)
-      : { isUpvoted: false, isDownVoted: false };
+      : { isUpVoted: false, isDownVoted: false };
     this.setState({ isUpVoted, isDownVoted });
   }
 
@@ -22,7 +22,9 @@ export default class Vote extends Component {
     try {
       const { movie, updateVoteCounts } = this.props;
       const { isUpVoted, isDownVoted } = this.state;
+      debugger;
       const values = await voteHandler(movie, isUpVoted, isDownVoted, clicked);
+      debugger;
       if (values.setState)
         this.setState({
           isUpVoted: values.isUpVoted,

@@ -76,39 +76,47 @@ export async function deleteFromMyList(movieId) {
 }
 
 export async function vote(movie) {
+  debugger;
   const response = await request
     .post('/api/me/movies/votes')
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send(movie);
+  debugger;
   return response;
 }
 
 export async function getMyVote(movieId) {
+  debugger;
   const response = await request
     .get(`/api/me/movies/votes/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
+  debugger;
   if (response.body === null) {
-    return { isUpvoted: false, isDownVoted: false };
+    return { isUpVoted: false, isDownVoted: false };
   } else {
     const { favorite } = response.body;
     return favorite
-      ? { isUpvoted: true, isDownVoted: false }
-      : { isUpvoted: false, isDownVoted: true };
+      ? { isUpVoted: true, isDownVoted: false }
+      : { isUpVoted: false, isDownVoted: true };
   }
 }
 
 export async function changeVote(movie) {
+  debugger;
   const response = await request
     .put(`/api/me/movies/votes/${movie.movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'))
-    .send({ favorite: !movie.favorite });
+    .send({ favorite: movie.favorite });
+  debugger;
   return response;
 }
 
 export async function deleteVote(movieId) {
+  debugger;
   const response = await request
     .delete(`/api/me/movies/votes/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
+  debugger;
   return response;
 }
 
@@ -144,6 +152,7 @@ export async function voteHandler(movie, isUpVoted, isDownVoted, clicked) {
     window.alert('You must be logged in to vote for this movie');
     return { setState: false, isUpVoted, isDownVoted };
   }
+  debugger;
   if (
     (isUpVoted && clicked === 'upVote') ||
     (isDownVoted && clicked === 'downVote')
@@ -153,27 +162,35 @@ export async function voteHandler(movie, isUpVoted, isDownVoted, clicked) {
     if (response.status !== 200) {
       throw new Error(response.body);
     }
+    // update the state flags
+    isUpVoted = false;
+    isDownVoted = false;
   } else if (
     (isUpVoted && clicked === 'downVote') ||
     (isDownVoted && clicked === 'upVote')
   ) {
     //change vote
+    movie.favorite = clicked === 'upVote' ? true : false;
     const response = await changeVote(movie);
     if (response.status !== 200) {
       throw new Error(response.body);
     }
+    // update the state flags
+    isUpVoted = !isUpVoted;
+    isDownVoted = !isDownVoted;
   } else {
     //update vote
-    movie.favorite = !movie.favorite;
+    movie.favorite = clicked === 'upVote' ? true : false;
     //add movie to votes table
     const response = await vote(movie);
     if (response.status !== 200) {
       throw new Error(response.body);
     }
+    // update the state flags
+    clicked === 'upVote'
+      ? (isUpVoted = !isUpVoted)
+      : (isDownVoted = !isDownVoted);
   }
-  // update the state flags
-  clicked === 'upVote'
-    ? (isUpVoted = !isUpVoted)
-    : (isDownVoted = !isDownVoted);
+  debugger;
   return { setState: true, isUpVoted, isDownVoted };
 }
