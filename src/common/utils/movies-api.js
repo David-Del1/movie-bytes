@@ -46,11 +46,12 @@ export async function fetchMovieTrailerId(movieId) {
   return response.body;
 }
 
-export async function getMyFavorites() {
+export async function addToMyList(movie) {
   const response = await request
-    .get('/api/me/movies/favorites')
-    .set('Authorization', window.localStorage.getItem('TOKEN'));
-  return response.body;
+    .post('/api/me/movies/list')
+    .set('Authorization', window.localStorage.getItem('TOKEN'))
+    .send(movie);
+  return response;
 }
 
 export async function getMyList() {
@@ -60,61 +61,63 @@ export async function getMyList() {
   return response.body;
 }
 
-export async function isNewMovie(movieId) {
-  const response = await request
-    .get(`/api/me/movies/${movieId}`)
-    .set('Authorization', window.localStorage.getItem('TOKEN'));
-  return response.body ? false : true;
-}
-export async function isMyFavorite(movieId) {
-  const response = await request
-    .get(`/api/me/movies/${movieId}/favorite`)
-    .set('Authorization', window.localStorage.getItem('TOKEN'));
-  if (response.body === null) {
-    return null;
-  } else {
-    const { favorite } = response.body;
-    return favorite;
-  }
-}
-
 export async function getIsInMyList(movieId) {
   const response = await request
-    .get(`/api/me/movies/${movieId}/list`)
+    .get(`/api/me/movies/list/${movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'));
-  if (response.body === null) {
-    return false;
-  } else {
-    const { myList } = response.body;
-    return myList;
-  }
+  return response.body ? true : false;
 }
 
-export async function addMovie(movie) {
+export async function deleteFromMyList(movieId) {
   const response = await request
-    .post('/api/me/movies')
+    .delete(`/api/me/movies/list/${movieId}`)
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  return response;
+}
+
+export async function vote(movie) {
+  const response = await request
+    .post('/api/me/movies/votes')
     .set('Authorization', window.localStorage.getItem('TOKEN'))
     .send(movie);
   return response;
 }
 
-export async function changeFavorite(movie) {
+export async function getMyVote(movieId) {
   const response = await request
-    .put(`/api/me/movies/${movie.movieId}/favorite`)
+    .get(`/api/me/movies/votes/${movieId}`)
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
+  if (response.body === null) {
+    return { isUpvoted: false, isDownVoted: false };
+  } else {
+    const { favorite } = response.body;
+    return favorite
+      ? { isUpvoted: true, isDownVoted: false }
+      : { isUpvoted: false, isDownVoted: true };
+  }
+}
+
+export async function changeVote(movie) {
+  const response = await request
+    .put(`/api/me/movies/votes/${movie.movieId}`)
     .set('Authorization', window.localStorage.getItem('TOKEN'))
-    .send({ favorite: movie.favorite });
+    .send({ favorite: !movie.favorite });
   return response;
 }
 
-export async function changeMyList(movie) {
+export async function deleteVote(movieId) {
   const response = await request
-    .put(`/api/me/movies/${movie.movieId}/list`)
-    .set('Authorization', window.localStorage.getItem('TOKEN'))
-    .send({ myList: movie.myList });
+    .delete(`/api/me/movies/votes/${movieId}`)
+    .set('Authorization', window.localStorage.getItem('TOKEN'));
   return response;
 }
 
-export async function toggleMyListHandler(movie, isInMyList) {
+export async function getVoteCounts(movieId) {
+  const response = await request.get(`/api/movies/votes/${movieId}`);
+  return response.body;
+}
+
+export async function myListHandler(movie, isInMyList) {
   if (
     isInMyList &&
     !window.confirm(
@@ -126,61 +129,51 @@ export async function toggleMyListHandler(movie, isInMyList) {
     window.alert('You must be logged in to add this movie to your list');
     return null;
   }
-  movie.myList = !isInMyList;
-  const response = (await isNewMovie(movie.movieId))
-    ? await addMovie(movie)
-    : await changeMyList(movie);
+  const response = isInMyList
+    ? await deleteFromMyList(movie.movieId)
+    : await addToMyList(movie);
   if (response.status !== 200) {
     throw new Error(response.body);
-    return null;
+  } else {
+    return response.body;
   }
-  return response.body;
 }
 
-async function updateFavorite(movie) {
-  const newMovie = await isNewMovie(movie.movieId);
-  if (newMovie) movie.myList = false;
-  const response = newMovie
-    ? await addMovie(movie)
-    : await changeFavorite(movie);
-  if (response.status !== 200) {
-    throw new Error(response.body);
-    return false;
-  }
-  return true;
-}
-
-export async function voteHandler(movie, upVote, downVote, clicked) {
+export async function voteHandler(movie, isUpVoted, isDownVoted, clicked) {
   if (!window.localStorage.getItem('TOKEN')) {
-    window.alert('You must be logged in to upvote this movie');
-    return { setState: false, upVote, downVote };
+    window.alert('You must be logged in to vote for this movie');
+    return { setState: false, isUpVoted, isDownVoted };
   }
-  let isUpVoted = upVote,
-    isDownVoted = downVote;
-  if (clicked === 'upVote') {
-    if (isUpVoted) {
-      isUpVoted = false;
-      movie.favorite = null;
-    } else {
-      movie.favorite = true;
-      isUpVoted = true;
-      isDownVoted = false;
+  if (
+    (isUpVoted && clicked === 'upVote') ||
+    (isDownVoted && clicked === 'downVote')
+  ) {
+    // delete movie from table
+    const response = await deleteVote(movie.movieId);
+    if (response.status !== 200) {
+      throw new Error(response.body);
+    }
+  } else if (
+    (isUpVoted && clicked === 'downVote') ||
+    (isDownVoted && clicked === 'upVote')
+  ) {
+    //change vote
+    const response = await changeVote(movie);
+    if (response.status !== 200) {
+      throw new Error(response.body);
     }
   } else {
-    if (isDownVoted) {
-      isDownVoted = false;
-      movie.favorite = null;
-    } else {
-      movie.favorite = false;
-      isUpVoted = false;
-      isDownVoted = true;
+    //update vote
+    movie.favorite = !movie.favorite;
+    //add movie to votes table
+    const response = await vote(movie);
+    if (response.status !== 200) {
+      throw new Error(response.body);
     }
   }
-  const setState = await updateFavorite(movie);
-  return { setState, isUpVoted, isDownVoted };
-}
-
-export async function getVoteCounts(movieId) {
-  const response = await request.get(`/api/movies/${movieId}/votes`);
-  return response.body;
+  // update the state flags
+  clicked === 'upVote'
+    ? (isUpVoted = !isUpVoted)
+    : (isDownVoted = !isDownVoted);
+  return { setState: true, isUpVoted, isDownVoted };
 }

@@ -17,7 +17,6 @@ export default class Home extends Component {
   };
 
   async componentDidMount() {
-    const { fetchUrl } = this.props;
     this.setState({
       popular: await discoverMovies('/api/movies/popular'),
       action: await discoverMovies('/api/movies/genre/28'),

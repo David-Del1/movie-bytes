@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getIsInMyList, toggleMyListHandler } from '../utils/movies-api.js';
+import { getIsInMyList, myListHandler } from '../utils/movies-api.js';
 import './ToggleMyList.css';
 
 export default class ToggleMyList extends Component {
@@ -19,7 +19,7 @@ export default class ToggleMyList extends Component {
     try {
       const { movie } = this.props;
       const { isInMyList } = this.state;
-      const handledMovie = await toggleMyListHandler(movie, isInMyList);
+      const handledMovie = await myListHandler(movie, isInMyList);
       if (handledMovie !== null) {
         const { updateMyList } = this.props;
         if (updateMyList) updateMyList(handledMovie);
