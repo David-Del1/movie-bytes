@@ -5,7 +5,7 @@ import Vote from '../vote/Vote.js';
 import './Movie.css';
 export default class Movie extends Component {
   render() {
-    const { movie, updateMyList } = this.props;
+    const { movie, onUpdate } = this.props;
     return (
       <li className='Movie'>
         <Link to={`/movies/${movie.movieId}`}>
@@ -15,7 +15,9 @@ export default class Movie extends Component {
             src={movie.poster}
             alt={movie.name}
           />
-          <ToggleMyList movie={movie} updateMyList={updateMyList} />
+          
+          <ToggleMyList movie={movie} onUpdate={onUpdate} />
+
           <Vote movie={movie} />
         </Link>
       </li>

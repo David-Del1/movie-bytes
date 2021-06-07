@@ -10,6 +10,8 @@ export default class ToggleMyList extends Component {
   async componentDidMount() {
     const token = window.localStorage.getItem('TOKEN');
     const { movie } = this.props;
+    // I would start by having the server return this value.
+    // It could get expensive to make 1 call per movie
     const isInMyList = token ? await getIsInMyList(movie.movieId) : false;
     this.setState({ isInMyList });
   }

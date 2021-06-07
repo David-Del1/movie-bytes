@@ -36,26 +36,24 @@ export default class Header extends Component {
     const token = window.localStorage.getItem('TOKEN');
     return (
       <div className="Header">
+        
         <Link to="/">
-          {/* <img src="assets/images/Movi-Bytes-logo.PNG" alt="logo" className="logo"/> */}
           <h1 className="logo">Movi-Bytes</h1>
         </Link>
-
-       
 
         <form onSubmit={this.handleSubmit}>
           <input onChange={this.handleChange} value={search} placeholder="Search for Movie"/>
         </form>
        
-
         <Link to='/my-list'>My Watch List</Link>
 
         <img
-        className="nav_avatar"
-        src="https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png"
-        alt="Avatar"
-        onClick={this.handleClick}/>
-      
+          className="nav_avatar"
+          src="https://i.pinimg.com/originals/0d/dc/ca/0ddccae723d85a703b798a5e682c23c1.png"
+          alt="Avatar"
+          onClick={this.handleClick}
+        />
+        
       </div>
     );
   }
