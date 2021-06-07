@@ -24,7 +24,7 @@ export default class Auth extends Component {
       const user = await action(this.state);
       onUser(user);
 
-      history.push('/movies'); //wrong route?
+      history.push('/movies');
     } catch (err) {
       this.setState({ error: err.error });
     }

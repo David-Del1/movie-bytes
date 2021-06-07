@@ -17,25 +17,27 @@ export default class Home extends Component {
   };
 
   async componentDidMount() {
-    const { fetchUrl } = this.props;
-    this.setState({
-      popular: await discoverMovies('/api/movies/popular'),
-      action: await discoverMovies('/api/movies/genre/28'),
-      comedy: await discoverMovies('/api/movies/genre/35'),
-      horror: await discoverMovies('/api/movies/genre/27'),
-      romance: await discoverMovies('/api/movies/genre/10749'),
-      documentaries: await discoverMovies('/api/movies/genre/99'),
-    });
+    // run these in parallel:
+    const [popular, action, comedy, horror, romance, documentaries] = await Promise.all([
+      discoverMovies('/api/movies/popular'),
+      discoverMovies('/api/movies/genre/28'),
+      discoverMovies('/api/movies/genre/35'),
+      discoverMovies('/api/movies/genre/27'),
+      discoverMovies('/api/movies/genre/10749'),
+      discoverMovies('/api/movies/genre/99'),
+    ]);
+
+    this.setState({ popular, action, comedy, horror, romance, documentaries });
   }
 
   render() {
     const { history, onUser, onSearch } = this.props;
-    const { popular, action, comedy, horror, romance, documentaries } =
-      this.state;
+    const { popular, action, comedy, horror, romance, documentaries } = this.state;
+    
     return (
       <div className='Movies'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
-        <Banner fetchUrl='/api/movies/popular' />
+        <Banner/>
         <MovieList title='Popular' movies={popular} />
         <MovieList title='Action' movies={action} />
         <MovieList title='Comedy' movies={comedy} />

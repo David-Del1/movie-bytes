@@ -20,16 +20,26 @@ export default class MovieDetail extends Component {
 
   async componentDidMount() {
     const { match } = this.props;
+    const { id } = match.params;
+
     try {
-      const movie = await fetchMovieDetail(match.params.id);
-      const movieTrailer = await fetchMovieTrailerId(match.params.id);
-      const { upVotes, downVotes } = await getVoteCounts(movie.movieId);
+      const [movie, movieTrailer] = await Promise.all([
+        fetchMovieDetail(id),
+        fetchMovieTrailerId(id),
+      ]);
+
       this.setState({
         movie,
         movieTrailer,
+      });
+      
+      const { upVotes, downVotes } = await getVoteCounts(movie.movieId);
+      
+      this.setState({
         upVotes,
         downVotes,
       });
+
     } catch (err) {
       console.log(err.message);
     } finally {
@@ -54,7 +64,9 @@ export default class MovieDetail extends Component {
           className='MovieDetail'
           style={{ backgroundImage: `url(${movie.backdrop})` }}
         >
+
           <h1>{movie.title}</h1>
+
           <iframe
             width='800'
             height='444'
@@ -65,7 +77,9 @@ export default class MovieDetail extends Component {
             allowfullscreen
             className='trailer'
           ></iframe>
+
           <p className='movie-overview'>{movie.overview}</p>
+
           {isMovieLoaded ? (
             <Vote
               movie={movie}
@@ -75,7 +89,9 @@ export default class MovieDetail extends Component {
           ) : (
             '...loading'
           )}
+
           {isMovieLoaded ? <ToggleMyList movie={movie} /> : '...loading'}
+          
         </div>
       </div>
     );

@@ -9,33 +9,30 @@ export default class MyList extends Component {
   state = { myList: [] };
 
   async componentDidMount() {
-    const token = window.localStorage.getItem('TOKEN');
-    this.setState({ myList: token ? await getMyList() : [] });
+    // App.js already prevents this component loading if no token
+    this.setState({ myList: await getMyList() });
   }
 
-  handleUpdate = (movie) => {
+  handleUpdate = (removed) => {
     const { myList } = this.state;
-    // find the movie id to delete
-    let index = 0;
-    for (let i = 0; i < myList.length; i++) {
-      if (myList[i].movieId === movie.movieId) {
-        index = i;
-        break;
-      }
-    }
-    // delete the movie from favorites array
-    myList.splice(index, 1);
-    this.setState({ myList });
+
+    this.setState({ 
+      myList: myList.filter(movie => movie.movieId !== removed.movieId) 
+    });
+   
   };
 
   render() {
     const { history, onUser, onSearch } = this.props;
     const { myList } = this.state;
+
     return (
       <div className='MyList'>
         <Header history={history} onUser={onUser} onSearch={onSearch} />
+    
         <div className="container">
-          <MovieList movies={myList} updateMyList={this.handleUpdate} />
+          {/* Use onEvent for callback props */}
+          <MovieList movies={myList} onUpdate={this.handleUpdate} />
         </div>
         
         <Footer />
