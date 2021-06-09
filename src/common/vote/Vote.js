@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isMyFavorite, voteHandler } from '../utils/movies-api.js';
+import { getMyVote, voteHandler } from '../utils/movies-api.js';
 import './Vote.css';
 
 export default class Vote extends Component {
@@ -11,12 +11,9 @@ export default class Vote extends Component {
   async componentDidMount() {
     const { movie } = this.props;
     const token = window.localStorage.getItem('TOKEN');
-    const favorite = token ? await isMyFavorite(movie.movieId) : null;
-    let isUpVoted = false,
-      isDownVoted = false;
-    if (favorite !== null) {
-      favorite ? (isUpVoted = true) : (isDownVoted = true);
-    }
+    const { isUpVoted, isDownVoted } = token
+      ? await getMyVote(movie.movieId)
+      : { isUpVoted: false, isDownVoted: false };
     this.setState({ isUpVoted, isDownVoted });
   }
 
